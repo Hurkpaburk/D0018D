@@ -22,6 +22,7 @@ public class Customer {
 		  account = new ArrayList<SavingsAccount>();
 	}	
 	
+	
 	public Customer() {
 		  name = "John Doe";
 		  personnummer = "000000-0000";
