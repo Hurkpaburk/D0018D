@@ -14,14 +14,14 @@ public class SavingsAccount {
 	private int accountNumber;
 	private double balance;
 	private String accountType;
-	private static final double interestRate = 0.02;
+	private static final double interestRate = 2;
 	
 	// Constructor
 	public SavingsAccount(int theAccountNumber, String theAccountType, int theTransaction) {
 		  accountNumber = theAccountNumber;
 		  accountType = theAccountType;
 		  balance = balance + theTransaction;
-	}
+	}	
 	
 	public SavingsAccount() {
 		  accountNumber = 0000;
@@ -36,6 +36,10 @@ public class SavingsAccount {
 	// Inparametrar: None 
 	// Returvärde: None
 	//------------------------------------------------------
+	public void setBalance(double theTransaction) {
+		balance = balance + theTransaction;
+	}
+	
 	public double getBalance() {
 		return balance;
 	}
@@ -45,12 +49,16 @@ public class SavingsAccount {
 	}
 	
 	public double getInterest() {
-		return balance*0.02;
+		return balance*(interestRate/100);
 	}
 	
-	public String getAccountInfo(){
-		String info = "(" + accountNumber + ", " + balance + "," + accountType + "," + interestRate + ")";
-		return info;
+	public StringBuilder getAccountInfo(){
+		
+		String temp = new String(accountNumber + ", " + balance + ", " + accountType + ", " + interestRate);
+		StringBuilder info = new StringBuilder(temp);
+		
+	return info;
+	
 	}
 }
 	
