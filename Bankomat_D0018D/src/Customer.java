@@ -13,7 +13,7 @@ public class Customer {
 	// Instance Variables
 	private String name;
 	private String personnummer;
-	private ArrayList<SavingsAccount> account;
+	private static ArrayList<SavingsAccount> account;
 	
 	// Constructor
 	public Customer(String theName, String thePersonnummer) {
