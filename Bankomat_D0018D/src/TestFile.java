@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class TestSavingsAccount {
+public class TestFile {
 	
 	public static void main(String []args){
 		
@@ -40,9 +40,9 @@ public class TestSavingsAccount {
 		System.out.println("END OF ACCOUNT TEST!");
 		
 		System.out.println("START OF CUSTOMER TEST!");
-		Customer customer1 = new Customer("Pelle Persson", "461220-4321");
+		Customer customer1 = new Customer("Pelle Persson", 4612204321L);
 		Customer customer2 = new Customer();
-		Customer customer3 = new Customer("Eva Dahlgren", "600609-1234");
+		Customer customer3 = new Customer("Eva Dahlgren", 6006091234L);
 		
 		System.out.println(customer1.getCustomerInfo());
 		System.out.println(customer2.getCustomerInfo());

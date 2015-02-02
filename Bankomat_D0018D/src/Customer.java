@@ -12,11 +12,11 @@ public class Customer {
 
 	// Instance Variables
 	private String name;
-	private String personnummer;
+	private long personnummer;
 	private static ArrayList<SavingsAccount> account;
 	
 	// Constructor
-	public Customer(String theName, String thePersonnummer) {
+	public Customer(String theName, long thePersonnummer) {
 		  name = theName;
 		  personnummer = thePersonnummer;
 		  account = new ArrayList<SavingsAccount>();
@@ -25,7 +25,7 @@ public class Customer {
 	
 	public Customer() {
 		  name = "John Doe";
-		  personnummer = "000000-0000";
+		  personnummer = 0000000000;
 		  account = new ArrayList<SavingsAccount>();
 	}
 	
@@ -52,14 +52,25 @@ public class Customer {
 		account.remove(theAccount);
 	}
 
-	public StringBuilder getCustomerInfo(){
+	public String getCustomerName(){
+		String info = new String(name);
+		return info;
+	}
+	
+	public long getCustomerPn(){
+		return personnummer;
+	}
+	
+	public String getCustomerInfo(){
 		String temp = new String(personnummer + ", " + name + ", ");
 		StringBuilder info = new StringBuilder(temp);
 		for(SavingsAccount i: account) {
-			 info.append(i.getAccountInfo() + ", ");
+			 info.append("\n" + i.getAccountInfo()+ ";");
 		}
-	return info;
+	return info.toString();
 	}
+	
+	
 	
 	
 	// Private Methods
