@@ -26,7 +26,7 @@ public class BankLogic {
 
 
 	public boolean addCustomer(String name, long pNr) {
-		if(existCustomerPn(pNr)) {
+		if(existCustomerPn(pNr) == null) {
 			// No New Customer Created due to existing pNr
 			return false;
 		}
@@ -37,22 +37,24 @@ public class BankLogic {
 	}
 	
 	public String infoCustomer(long pNr) {
-		if(existCustomerPn(pNr)) {
-			customer.;
+		Customer tempPerson = existCustomerPn(pNr);
+		if(tempPerson != null) {
+			return tempPerson.getCustomerInfo();
+		}
+		else {
+			return null;
 		}
 	}
 	
 	// Private Methods
 
-	private boolean existCustomerPn(long theCustomer) {
-		boolean temp = false;
+	private Customer existCustomerPn(long theCustomer) {
 		for(Customer i: customer) {
 			if(theCustomer == i.getCustomerPn()) {
-				temp = true;
-				break;
+				return i;
 			}
 		}
-		return temp;
+		return null;
 	}
 
 	
