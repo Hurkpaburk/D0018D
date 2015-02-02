@@ -29,7 +29,8 @@ public class Customer {
 		  account = new ArrayList<SavingsAccount>();
 	}
 	
-	
+	// Methods
+	// Public Methods
 	
 	//------------------------------------------------------
 	// Beskrivning: Main function will take user input and decide 
@@ -38,9 +39,15 @@ public class Customer {
 	// Returvärde: None
 	//------------------------------------------------------
 	public void addAccount(int theAccountNumber, String theAccountType, int theTransaction) {
-		account.add(new SavingsAccount(theAccountNumber, theAccountType, theTransaction));
+		if(existAccountNumber(theAccountNumber)) {
+			System.out.println("Account number: " + theAccountNumber + " exists!\n"
+					+ "No new Account Created");
+		}
+		else {
+			account.add(new SavingsAccount(theAccountNumber, theAccountType, theTransaction));
+		}
 	}
-	
+
 	public void removeAccount(SavingsAccount theAccount) {
 		account.remove(theAccount);
 	}
@@ -48,10 +55,23 @@ public class Customer {
 	public StringBuilder getCustomerInfo(){
 		String temp = new String(personnummer + ", " + name + ", ");
 		StringBuilder info = new StringBuilder(temp);
-		for(int i = 0; i<account.size();i++) {
-			 info.append(account.get(i).getAccountInfo() + ", ");
+		for(SavingsAccount i: account) {
+			 info.append(i.getAccountInfo() + ", ");
 		}
 	return info;
 	}
-}
+	
+	
+	// Private Methods
 
+	private boolean existAccountNumber(int theAccountNumber) {
+		boolean temp = false;
+		for(SavingsAccount i: account) {
+			if(theAccountNumber == i.getAccountNumber()) {
+				temp = true;
+				break;
+			}
+		}
+		return temp;
+	}
+}

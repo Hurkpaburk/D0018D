@@ -11,7 +11,7 @@ public class SavingsAccount {
 	//****************************************************************** 
 
 	// Instance Variables
-	private int accountNumber;
+	private int  accountNumber;
 	private double balance;
 	private String accountType;
 	private static final double interestRate = 2;
@@ -43,7 +43,7 @@ public class SavingsAccount {
 	//------------------------------------------------------
 	// Beskrivning: get the account balance
 	// Inparametrar: None
-	// Returvärde: None
+	// Returvärde: balance - Account balance
 	//------------------------------------------------------
 	public double getBalance() {
 		return balance;
@@ -52,7 +52,7 @@ public class SavingsAccount {
 	//------------------------------------------------------
 	// Beskrivning: get the account number
 	// Inparametrar: None
-	// Returvärde: None
+	// Returvärde: accountNumber - Account number
 	//------------------------------------------------------
 	public int getAccountNumber() {
 		return accountNumber;
@@ -61,7 +61,7 @@ public class SavingsAccount {
 	//------------------------------------------------------
 	// Beskrivning: get the account interest
 	// Inparametrar: None
-	// Returvärde: None
+	// Returvärde: Interest - balance with interest
 	//------------------------------------------------------
 	public double getInterest() {
 		return balance*(interestRate/100);
@@ -70,7 +70,7 @@ public class SavingsAccount {
 	//------------------------------------------------------
 	// Beskrivning: get the account information
 	// Inparametrar: None
-	// Returvärde: None
+	// Returvärde: info - Account information
 	//------------------------------------------------------
 	public StringBuilder getAccountInfo(){
 		
