@@ -3,10 +3,10 @@ import java.util.*;
 
 public class BankLogic {
 	//****************************************************************** 
-	// Programmerare: Johan Bergström, johbef-4@student.ltu.se
+	// Programmerare: Johan BergstrÃ¶m, johbef-4@student.ltu.se
 	// Datum: 2015-01-29
-	// Senast uppdaterad: 2015-01-29, Johan Bergström 
-	// Beskrivning: Present Account information 
+	// Senast uppdaterad: 2015-01-29, Johan BergstrÃ¶m 
+	// Beskrivning: Handle bank logic  
 	// Version: 1, First Release 
 	//****************************************************************** 
 
@@ -14,6 +14,9 @@ public class BankLogic {
 	private static ArrayList<Customer> customer;
 	
 	// Constructor
+	
+	// Metohds
+	// Public Methods
 	
 	public String infoBank() {
 		String temp = new String("All Customers:\n");
