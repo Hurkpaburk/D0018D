@@ -22,7 +22,7 @@ public class Customer {
 		  account = new ArrayList<SavingsAccount>();
 	}	
 	
-	
+	// Default Constructor
 	public Customer() {
 		  name = "John Doe";
 		  personnummer = 0000000000;
@@ -33,9 +33,8 @@ public class Customer {
 	// Public Methods
 	
 	//------------------------------------------------------
-	// Beskrivning: Main function will take user input and decide 
-	// if calculate string (menu function) or exit program shall be done.
-	// Inparametrar: None 
+	// Beskrivning: Add account 
+	// Inparametrar: theAccountNumber - New account number, theAccountType - Account Type, theTransaction - Initial deposit
 	// Returv‰rde: None
 	//------------------------------------------------------
 	public void addAccount(int theAccountNumber, String theAccountType, int theTransaction) {
@@ -48,6 +47,11 @@ public class Customer {
 		}
 	}
 
+	//------------------------------------------------------
+	// Beskrivning: Remove specific account
+	// Inparametrar: theAccount - Account to be removed
+	// Returv√§rde: None
+	//------------------------------------------------------
 	public void removeAccount(SavingsAccount theAccount) {
 		account.remove(theAccount);
 	}
