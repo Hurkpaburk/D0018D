@@ -3,9 +3,9 @@ import java.util.*;
 
 public class SavingsAccount {
 	//****************************************************************** 
-	// Programmerare: Johan Bergstrˆm, johbef-4@student.ltu.se
+	// Programmerare: Johan Bergstr√∂m, johbef-4@student.ltu.se
 	// Datum: 2015-01-29
-	// Senast uppdaterad: 2015-01-29, Johan Bergstrˆm 
+	// Senast uppdaterad: 2015-01-29, Johan Bergstr√∂m 
 	// Beskrivning: Handle Savings Account Information 
 	// Version: 1, First Release 
 	//****************************************************************** 
@@ -32,18 +32,27 @@ public class SavingsAccount {
 	
 	
 	//------------------------------------------------------
-	// Beskrivning: Calculates a new account balance 
+	// Beskrivning: Withdraw amount from balance 
 	// Inparametrar: theTransaction - Amount to change the account balance with
-	// Returv‰rde: None
+	// Returv√§rde: None
 	//------------------------------------------------------
-	public void setBalance(double theTransaction) {
+	public void withdraw(double theTransaction) {
+		balance = balance - theTransaction;
+	}
+	
+	//------------------------------------------------------
+	// Beskrivning: deposit amount from balance
+	// Inparametrar: theTransaction - Amount to change the account balance with
+	// Returv√§rde: None
+	//------------------------------------------------------
+	public void deposit(double theTransaction) {
 		balance = balance + theTransaction;
 	}
 	
 	//------------------------------------------------------
 	// Beskrivning: get the account balance
 	// Inparametrar: None
-	// Returv‰rde: balance - Account balance
+	// Returv√§rde: balance - Account balance
 	//------------------------------------------------------
 	public double getBalance() {
 		return balance;
@@ -52,7 +61,7 @@ public class SavingsAccount {
 	//------------------------------------------------------
 	// Beskrivning: get the account number
 	// Inparametrar: None
-	// Returv‰rde: accountNumber - Account number
+	// Returv√§rde: accountNumber - Account number
 	//------------------------------------------------------
 	public int getAccountNumber() {
 		return accountNumber;
@@ -61,7 +70,7 @@ public class SavingsAccount {
 	//------------------------------------------------------
 	// Beskrivning: get the account interest
 	// Inparametrar: None
-	// Returv‰rde: Interest - balance with interest
+	// Returv√§rde: Interest - balance with interest
 	//------------------------------------------------------
 	public double getInterest() {
 		return balance*(interestRate/100);
@@ -70,7 +79,7 @@ public class SavingsAccount {
 	//------------------------------------------------------
 	// Beskrivning: get the account information
 	// Inparametrar: None
-	// Returv‰rde: info - Account information
+	// Returv√§rde: info - Account information
 	//------------------------------------------------------
 	public String getAccountInfo(){
 		
