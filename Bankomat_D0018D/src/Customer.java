@@ -13,7 +13,8 @@ public class Customer {
 	// Instance Variables
 	private String name;
 	private long personnummer;
-	private static ArrayList<SavingsAccount> account;
+	private static ArrayList<SavingsAccount> account; // Static to share between all instances of Customer to avoid duplicate account number
+	
 	
 	// Constructor
 	public Customer(String theName, long thePersonnummer) {
@@ -25,7 +26,7 @@ public class Customer {
 	// Default Constructor
 	public Customer() {
 		  name = "John Doe";
-		  personnummer = 0000000000;
+		  personnummer = 0000000000L;
 		  account = new ArrayList<SavingsAccount>();
 	}
 	
@@ -37,13 +38,14 @@ public class Customer {
 	// Inparametrar: theAccountNumber - New account number, theAccountType - Account Type, theTransaction - Initial deposit
 	// Returvärde: None
 	//------------------------------------------------------
-	public void addAccount(int theAccountNumber, String theAccountType, int theTransaction) {
-		if(existAccountNumber(theAccountNumber)) {
-			System.out.println("Account number: " + theAccountNumber + " exists!\n"
-					+ "No new Account Created");
+	public int addAccount(int theAccountNumber, String theAccountType, int theTransaction) {
+		SavingsAccount tempAccount = existAccountNumber(theAccountNumber);
+		if(tempAccount != null) {
+			return -1;
 		}
 		else {
 			account.add(new SavingsAccount(theAccountNumber, theAccountType, theTransaction));
+			return theAccountNumber;
 		}
 	}
 
@@ -55,7 +57,28 @@ public class Customer {
 	public void removeAccount(SavingsAccount theAccount) {
 		account.remove(theAccount);
 	}
+	
+	public String getAccountInfo(int theAccountNumber){
+		SavingsAccount theAccount = existAccountNumber(theAccountNumber);
+		if(theAccount != null) {
+			return theAccount.toString();
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public SavingsAccount getAccount(int theAccountNumber){
+		SavingsAccount theAccount = existAccountNumber(theAccountNumber);
+		if(theAccount != null) {
+			return theAccount;
+		}
+		else {
+			return null;
+		}
+	}
 
+	
 	public String getCustomerName(){
 		String info = new String(name);
 		return info;
@@ -65,28 +88,28 @@ public class Customer {
 		return personnummer;
 	}
 	
-	public String getCustomerInfo(){
-		String temp = new String(personnummer + ", " + name + ", ");
-		StringBuilder info = new StringBuilder(temp);
+	public String toString(){
+		String customerInfo = new String(personnummer + ", " + name + ", ");
+		StringBuilder info = new StringBuilder(customerInfo);
 		for(SavingsAccount i: account) {
-			 info.append("\n" + i.getAccountInfo()+ ";");
+			 info.append("\n" + i.toString()+ ";");
 		}
 	return info.toString();
 	}
-	
-	
-	
-	
+
+	public void setCustomerName(String name){
+		this.name = name;
+	}
+
+
 	// Private Methods
 
-	private boolean existAccountNumber(int theAccountNumber) {
-		boolean temp = false;
+	private SavingsAccount existAccountNumber(int theAccountNumber) {
 		for(SavingsAccount i: account) {
 			if(theAccountNumber == i.getAccountNumber()) {
-				temp = true;
-				break;
+				return i;
 			}
 		}
-		return temp;
+		return null;
 	}
 }

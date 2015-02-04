@@ -81,10 +81,10 @@ public class SavingsAccount {
 	// Inparametrar: None
 	// Returvärde: info - Account information
 	//------------------------------------------------------
-	public String getAccountInfo(){
+	public String toString(){
 		
-		String temp = new String(accountNumber + ", " + balance + ", " + accountType + ", " + interestRate);
-		StringBuilder info = new StringBuilder(temp);
+		String accountInfo = new String(accountNumber + ", " + balance + ", " + accountType + ", " + interestRate);
+		StringBuilder info = new StringBuilder(accountInfo);
 		
 	return info.toString();
 	}

@@ -14,27 +14,27 @@ public class TestFile {
 		SavingsAccount testAccountThree = new SavingsAccount(theAccountNumber, theAccountType, theTransaction);
 
 		System.out.println(testAccount.getBalance());
-		System.out.println(testAccount.getAccountInfo());
+		System.out.println(testAccount.toString());
 		System.out.println(testAccount.getInterest());
 		System.out.println(testAccount.getAccountNumber());
 		
 		double deposit = 15;
 		
-		testAccount.setBalance(deposit);
+		testAccount.deposit(deposit);
 		System.out.println(testAccount.getBalance());
 		
-		double withdraw = -15;
-		testAccount.setBalance(withdraw);
+		double withdraw = 15;
+		testAccount.withdraw(withdraw);
 		System.out.println(testAccount.getBalance());
 		
 		System.out.println(testAccountTwo.getBalance());
-		System.out.println(testAccountTwo.getAccountInfo());
+		System.out.println(testAccountTwo.toString());
 		System.out.println(testAccountTwo.getInterest());
 		System.out.println(testAccountTwo.getAccountNumber());
 		
 
 		System.out.println(testAccountThree.getBalance());
-		System.out.println(testAccountThree.getAccountInfo());
+		System.out.println(testAccountThree.toString());
 		System.out.println(testAccountThree.getInterest());
 		System.out.println(testAccountThree.getAccountNumber());
 		System.out.println("END OF ACCOUNT TEST!");
@@ -44,18 +44,18 @@ public class TestFile {
 		Customer customer2 = new Customer();
 		Customer customer3 = new Customer("Eva Dahlgren", 6006091234L);
 		
-		System.out.println(customer1.getCustomerInfo());
-		System.out.println(customer2.getCustomerInfo());
-		System.out.println(customer3.getCustomerInfo());
+		System.out.println(customer1.toString());
+		System.out.println(customer2.toString());
+		System.out.println(customer3.toString());
 		
 		customer1.addAccount(1, "Test", 20);
 		customer1.addAccount(3, "Test", 0);
 		customer2.addAccount(12, "Test2", 10);
 		customer3.addAccount(12, "Test3", 1);
 		
-		System.out.println(customer1.getCustomerInfo());
-		System.out.println(customer2.getCustomerInfo());
-		System.out.println(customer3.getCustomerInfo());
+		System.out.println(customer1.toString());
+		System.out.println(customer2.toString());
+		System.out.println(customer3.toString());
 		
 		
 

@@ -12,19 +12,21 @@ public class BankLogic {
 
 	// Instance Variables
 	private static ArrayList<Customer> customer;
-	
+	private static int startAccount =  1001;
+	private int nextAccount;
+
 	// Constructor
-	
+
 	// Metohds
 	// Public Methods
-	
+
 	public String infoBank() {
-		String temp = new String("All Customers:\n");
-		StringBuilder info = new StringBuilder(temp);
+		String the = new String("All Customers:\n");
+		StringBuilder info = new StringBuilder(the);
 		for(Customer i: customer) {
-			 info.append("\n" + i.getCustomerName() + ";");
+			info.append("\n" + i.getCustomerName() + ";");
 		}
-	return info.toString();
+		return info.toString();
 	}
 
 
@@ -38,17 +40,108 @@ public class BankLogic {
 			return true;
 		}
 	}
-	
+
 	public String infoCustomer(long pNr) {
-		Customer tempPerson = existCustomerPn(pNr);
-		if(tempPerson != null) {
-			return tempPerson.getCustomerInfo();
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) {
+			return thePerson.toString();
 		}
 		else {
 			return null;
 		}
 	}
+
+	public boolean changeCustomerName(String name, long pNr) {
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) {
+			thePerson.setCustomerName(name);
+			return true; 
+		}
+		else {
+			return false;
+		}
+	}
+
+
+	public String removeCustomer(long pNr) {
+		
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) {
+			String customerName = new String(thePerson.getCustomerName() +"\n");
+			StringBuilder removedCustomer = new StringBuilder(customerName);
+			
+			for (int i = startAccount; i<nextAccount; i++) {
+				SavingsAccount theAccount = thePerson.getAccount(i);
+				removedCustomer.append("Closed Account: " + closeAccount(pNr,accountId) + ", Saldo: " + theAccount.getBalance() + ", Ränta: " + theAccount.getInterest() + "\n");
+				thePerson.removeAccount(accountId);
+			}
+			return removedCustomer.toString();
+			customer.remove(thePerson)
+		}
+		return null;
+	}
 	
+
+	public int addSavingsAccount(long pNr, int accountId) {
+		int accountAdded = accountId;
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) {
+			accountAdded = thePerson.addAccount(accountId, "Sparkonto", 0);
+			return accountAdded; 
+		}
+		else {
+			return -1;
+		}
+	}
+
+	public String infoAccount(long pNr, int accountId) {
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) {
+			return thePerson.getAccountInfo(accountId);
+		}
+		else {
+			return null;
+		}
+	}
+
+	public boolean deposit(long pNr, int accountId, double amount) {
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) {
+			SavingsAccount theAccount = thePerson.getAccount(accountId);
+			if (theAccount != null) {
+				theAccount.deposit(amount);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean withdraw(long pNr, int accountId, double amount) {
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) {
+			SavingsAccount theAccount = thePerson.getAccount(accountId);
+			if (theAccount != null) {
+				theAccount.withdraw(amount);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public String closeAccount(long pNr, int accountId) {
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) {
+			SavingsAccount theAccount = thePerson.getAccount(accountId);
+			if (theAccount != null) {
+				String theBalance = new String("Saldo: " + theAccount.getBalance() + ", Ränta: " + theAccount.getInterest()); 
+				thePerson.removeAccount(theAccount);
+				return theBalance;
+			}
+		}
+		return null;
+	}
+
+
 	// Private Methods
 
 	private Customer existCustomerPn(long theCustomer) {
@@ -59,22 +152,5 @@ public class BankLogic {
 		}
 		return null;
 	}
-
-	
 }
-/*
-	public boolean changeCustomerName(String name, long pNr)
-	
-	public String removeCustomer(long pNr)
-	
-	
-	public int addSavingsAccount(long pNr)
-	
-	public String infoAccount(long pNr, int accountId)
-	
-	public boolean deposit(long pNr, int accountId, double amount)
-	
-	public boolean withdraw(long pNr, int accountId, double amount)
-	
-	public String closeAccount(long pNr, int accountId) 
-	*/
+
