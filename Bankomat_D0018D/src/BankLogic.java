@@ -3,9 +3,9 @@ import java.util.*;
 public class BankLogic {
 	//****************************************************************** 
 	// Programmerare: Johan Bergström, johbef-4@student.ltu.se
-	// Datum: 2015-01-29
-	// Senast uppdaterad: 2015-01-29, Johan Bergström 
-	// Beskrivning: Handle bank logic  
+	// Datum: 2015-02-05
+	// Senast uppdaterad: 2015-02-05, Johan Bergström 
+	// Beskrivning: Handle bank logic class
 	// Version: 1, First Release 
 	//****************************************************************** 
 
@@ -13,8 +13,6 @@ public class BankLogic {
 	private ArrayList<Customer> customer;
 	private static final int startAccount =  1001;
 	private static int nextAccount;
-
-	// Constructor
 	
 	// Default Constructor
 	public BankLogic() {
@@ -25,42 +23,62 @@ public class BankLogic {
 	// Metohds
 	// Public Methods
 
+	//------------------------------------------------------
+	// Beskrivning: Get information about bank
+	// Inparametrar: None
+	// Returvärde: Customer Names 
+	//------------------------------------------------------
 	public String infoBank() {
-		String the = new String("All Customers:");
-		StringBuilder info = new StringBuilder(the);
-		for(Customer i: customer) {
-			info.append("\n" + i.getCustomerName() + ";");
+		StringBuilder info = new StringBuilder(new String()); // stringbuilder to append
+		for(Customer i: customer) { // loop over customers
+			info.append("\n" + i.getCustomerName() + ";"); 
 		}
 		System.out.println(info.toString());
 		return info.toString();
 	}
 
-
+	//------------------------------------------------------
+	// Beskrivning: Add new customer to bank
+	// Inparametrar: name - Customer Name, pNr - personnummer
+	// Returvärde: true/false if created or not
+	//------------------------------------------------------
 	public boolean addCustomer(String name, long pNr) {
-		if(existCustomerPn(pNr) != null) {
+		boolean temp = false;
+		if(existCustomerPn(pNr) != null) { // check if customer exists
 			// No New Customer Created due to existing pNr
-			return false;
+			temp = false;
 		}
-		else {
+		else { // add new customer
 			customer.add(new Customer(name, pNr));
-			return true;
+			temp = true;
 		}
+		return temp;
 	}
-
+	
+	//------------------------------------------------------
+	// Beskrivning: Get information about customer
+	// Inparametrar: pNr - personnummer
+	// Returvärde: customer information 
+	//------------------------------------------------------
 	public String infoCustomer(long pNr) {
 		Customer thePerson = existCustomerPn(pNr);
-		if(thePerson != null) {
+		if(thePerson != null) { // check if customer exists
 			return thePerson.toString();
 		}
 		else {
-			return null;
+			return new String("Can not find information about Customer");
 		}
 	}
-
+	
+	//------------------------------------------------------
+	// Beskrivning: Change customer name
+	// Inparametrar: name - New customer name, pNr - personnummer
+	// Returvärde: true/ false if changed or not 
+	//------------------------------------------------------
 	public boolean changeCustomerName(String name, long pNr) {
 		Customer thePerson = existCustomerPn(pNr);
-		if(thePerson != null) {
-			thePerson.setCustomerName(name);
+		if(thePerson != null) { // check if customer exists
+			thePerson.setCustomerName(name); // Set customer name
 			return true; 
 		}
 		else {
@@ -68,94 +86,123 @@ public class BankLogic {
 		}
 	}
 
-
+	//------------------------------------------------------
+	// Beskrivning: remove customer from bank
+	// Inparametrar: pNr - personnummer
+	// Returvärde: Information about customers account when removed from bank 
+	//------------------------------------------------------
 	public String removeCustomer(long pNr) {
-		
 		Customer thePerson = existCustomerPn(pNr);
-		if(thePerson != null) {
+		if(thePerson != null) { // Check if customer exists
 			String customerName = new String(thePerson.getCustomerName() +"\n");
-			StringBuilder removedCustomer = new StringBuilder(customerName);
-			for (int i = startAccount; i<nextAccount; i++) {
-				SavingsAccount theAccount = thePerson.getAccount(i);
-				if(theAccount != null) {
-					removedCustomer.append("Closed Account: " + closeAccount(pNr,i) + ", Saldo: " + theAccount.getBalance() + ", R�nta: " + theAccount.getInterest() + "\n");
-					thePerson.removeAccount(theAccount);
+			StringBuilder removedCustomer = new StringBuilder(customerName); // stringbuilder to append customer information
+			for (int i = startAccount; i<nextAccount; i++) { // go over all created bank account numbers
+				SavingsAccount theAccount = thePerson.getAccount(i); 
+				if(theAccount != null) { // if customer owns bank account
+					removedCustomer.append("Closed Account: " + closeAccount(pNr,i) + "\n"); // Append account information
+					thePerson.removeAccount(theAccount); // Remove account from list
 				}
 			}
-			customer.remove(thePerson);
-			return removedCustomer.toString();
+			customer.remove(thePerson); // remove customer from list
+			return removedCustomer.toString(); 
 		}
 		return null;
 	}
 	
-
-	public int addSavingsAccount(long pNr, int accountId) {
+	//------------------------------------------------------
+	// Beskrivning: Add savings account for customer
+	// Inparametrar: pNr - personnummer
+	// Returvärde: Account number if created, otherwise -1 
+	//------------------------------------------------------
+	public int addSavingsAccount(long pNr) {
 		int accountAdded = -1;
-		System.out.println("Next Account: "  + nextAccount);
-		if ((accountId >= nextAccount) && (accountId >= startAccount)) {
-			Customer thePerson = existCustomerPn(pNr);
-			if(thePerson != null) {
-				accountAdded = thePerson.addAccount(accountId, "Sparkonto", 0);
-				nextAccount = accountAdded + 1;
-				System.out.println(accountAdded);
-			}
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) { // If customer exists
+			accountAdded = thePerson.addAccount(nextAccount, "Sparkonto", 0); // create account with 0 deposit
+			nextAccount++; // Increase the number for next available bank account
 		}
 		return accountAdded;
 	}
-
+	
+	//------------------------------------------------------
+	// Beskrivning: Information about a account
+	// Inparametrar: pNr - personnummer, accountId - Account number
+	// Returvärde: Information about a customers specific account 
+	//------------------------------------------------------
 	public String infoAccount(long pNr, int accountId) {
-		Customer thePerson = existCustomerPn(pNr);
-		if(thePerson != null) {
-			return thePerson.getAccountInfo(accountId);
+		Customer thePerson = existCustomerPn(pNr); 
+		if(thePerson != null) { // Does customer exist
+			return thePerson.getAccountInfo(accountId); // return account information
 		}
 		else {
-			return null;
+			return new String("No matching Customer for Bank!");
 		}
 	}
-
+	
+	//------------------------------------------------------
+	// Beskrivning: Deposit to a account
+	// Inparametrar: pNr - personnummer, accountId - Account Number, amount - Amount to deposit
+	// Returvärde: True or false depending on success
+	//------------------------------------------------------
 	public boolean deposit(long pNr, int accountId, double amount) {
 		Customer thePerson = existCustomerPn(pNr);
-		if(thePerson != null) {
+		if(thePerson != null) { // exist customer
 			SavingsAccount theAccount = thePerson.getAccount(accountId);
-			if (theAccount != null) {
-				theAccount.deposit(amount);
+			if (theAccount != null) { // exist account for customer
+				theAccount.deposit(amount); // deposit 
 				return true;
 			}
 		}
 		return false;
 	}
 
+	//------------------------------------------------------
+	// Beskrivning: Withdraw from a account
+	// Inparametrar: pNr - personnummer, accountId - Account Number, amount - Amount to withdraw
+	// Returvärde: True or false depending on success
+	//------------------------------------------------------
 	public boolean withdraw(long pNr, int accountId, double amount) {
 		Customer thePerson = existCustomerPn(pNr);
-		if(thePerson != null) {
+		if(thePerson != null) { // exist customer
 			SavingsAccount theAccount = thePerson.getAccount(accountId);
-			if (theAccount != null) {
-				theAccount.withdraw(amount);
-				return true;
+			if (theAccount != null) { // exist account for customer
+				if(theAccount.getBalance() > 0) { // Can only withdraw if balance is larger then 0
+					theAccount.withdraw(amount); // withdraw
+					return true;
+				}
 			}
 		}
 		return false;
 	}
-
+	
+	//------------------------------------------------------
+	// Beskrivning: Close Account for a customer
+	// Inparametrar: pNr - personnummer, accountId - Account Number
+	// Returvärde: Information about closed account
+	//------------------------------------------------------
 	public String closeAccount(long pNr, int accountId) {
 		Customer thePerson = existCustomerPn(pNr);
-		if(thePerson != null) {
+		if(thePerson != null) { // exist customer
 			SavingsAccount theAccount = thePerson.getAccount(accountId);
-			if (theAccount != null) {
+			if (theAccount != null) { // exist account
 				String theBalance = new String("Saldo: " + theAccount.getBalance() + ", R�nta: " + theAccount.getInterest()); 
-				thePerson.removeAccount(theAccount);
-				return theBalance;
+				thePerson.removeAccount(theAccount); // remove account
+				return theBalance; 
 			}
 		}
 		return null;
 	}
 
+	//	Private Methods
 
-	// Private Methods
-
+	//------------------------------------------------------
+	// Beskrivning: Check if Customer exists in list
+	// Inparametrar: theCustomer - personnummer,
+	// Returvärde: Customer Object
+	//------------------------------------------------------
 	private Customer existCustomerPn(long theCustomer) {
-		for(Customer i: customer) {
-			if(theCustomer == i.getCustomerPn()) {
+		for(Customer i: customer) { // loop over list
+			if(theCustomer == i.getCustomerPn()) { // check if personummer exist in any Customer 
 				return i;
 			}
 		}

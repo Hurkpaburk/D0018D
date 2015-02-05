@@ -65,34 +65,35 @@ public class TestFile {
 		
 		System.out.println("END OF ACCOUNT TEST!");
 		*/
+		/*
 		System.out.println("START OF BANK TEST!");
 		
 		BankLogic bank = new BankLogic();
 		bank.addCustomer("Pelle Persson", 12345L);
-		int addedAccount = bank.addSavingsAccount(12345L, 999);
+		int addedAccount = bank.addSavingsAccount(12345L);
 		System.out.println("Added Account: " + addedAccount);
 		System.out.println("Added Customer: " + bank.infoCustomer(12345L));
 		System.out.println("Added Bank: " + bank.infoBank());
-		addedAccount = bank.addSavingsAccount(12345L, 1001);
+		addedAccount = bank.addSavingsAccount(12345L);
 		System.out.println("Added Account: " + addedAccount);
 
-		addedAccount = bank.addSavingsAccount(12345L, 1005);
+		addedAccount = bank.addSavingsAccount(12345L);
 		System.out.println("Added Account: " + addedAccount);
 
-		addedAccount = bank.addSavingsAccount(12345L, 1003);
+		addedAccount = bank.addSavingsAccount(12345L);
 		System.out.println("Added Account: " + addedAccount);
-		addedAccount = bank.addSavingsAccount(12345L, 1003);
+		addedAccount = bank.addSavingsAccount(12345L);
 		System.out.println("Added Account: " + addedAccount);
 		System.out.println("Added Bank: " + bank.infoBank());
 		
 		System.out.println("NEW CUSTOMER");
 		bank.addCustomer("Elin Eriksson", 123456L);
-		addedAccount = bank.addSavingsAccount(123456L, 999);
+		addedAccount = bank.addSavingsAccount(123456L);
 		System.out.println("Added Account: " + addedAccount);
 		System.out.println("Added Customer: " + bank.infoCustomer(123456L));
-		addedAccount = bank.addSavingsAccount(123456L, 1002);
+		addedAccount = bank.addSavingsAccount(123456L);
 		System.out.println("Added Account: " + addedAccount);
-		addedAccount = bank.addSavingsAccount(123456L, 1006);
+		addedAccount = bank.addSavingsAccount(123456L);
 		System.out.println("Added Account: " + addedAccount); 
 		
 		
@@ -102,8 +103,15 @@ public class TestFile {
 		String removedAccount =  bank.closeAccount(12345L, 1001);		
 		System.out.println("Removed Account: " + removedAccount);
 		System.out.println("Info Customer: \n" + bank.infoCustomer(12345L));
-		addedAccount = bank.addSavingsAccount(123456L, 1001);
+		addedAccount = bank.addSavingsAccount(123456L);
 		System.out.println("Info Customer: \n" + bank.infoCustomer(123456L));
+		
+		System.out.println("END OF BANKLOGIC TEST!");
+		*/
+		
+		System.out.println("START OF BANK TEST!");
+		BankMenu bankTest = new BankMenu();
+		bankTest.test();
 		
 	}
 }

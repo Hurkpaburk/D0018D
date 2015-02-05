@@ -2,9 +2,9 @@
 public class SavingsAccount {
 	//****************************************************************** 
 	// Programmerare: Johan Bergström, johbef-4@student.ltu.se
-	// Datum: 2015-01-29
-	// Senast uppdaterad: 2015-01-29, Johan Bergström 
-	// Beskrivning: Handle Savings Account Information 
+	// Datum: 2015-02-05
+	// Senast uppdaterad: 2015-02-05, Johan Bergström 
+	// Beskrivning: Handle Savings Account class 
 	// Version: 1, First Release 
 	//****************************************************************** 
 
@@ -28,6 +28,7 @@ public class SavingsAccount {
 		  balance = 0;
 	}
 	
+	// Public methods
 	
 	//------------------------------------------------------
 	// Beskrivning: Withdraw amount from balance 
@@ -82,9 +83,7 @@ public class SavingsAccount {
 	public String toString(){
 		
 		String accountInfo = new String(accountNumber + ", " + balance + ", " + accountType + ", " + interestRate);
-		StringBuilder info = new StringBuilder(accountInfo);
-		
-	return info.toString();
+		return accountInfo;
 	}
 }
 	
