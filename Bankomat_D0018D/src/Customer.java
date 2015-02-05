@@ -1,4 +1,3 @@
-import java.math.*;
 import java.util.*;
 
 public class Customer {
@@ -89,12 +88,13 @@ public class Customer {
 	}
 	
 	public String toString(){
-		String customerInfo = new String(personnummer + ", " + name + ", ");
+		String customerInfo = new String(personnummer + ", " + name + "; ");
 		StringBuilder info = new StringBuilder(customerInfo);
 		for(SavingsAccount i: account) {
-			 info.append("\n" + i.toString()+ ";");
+			 info.append("\n" + i.toString());
 		}
-	return info.toString();
+		info.append("\n");
+		return info.toString();
 	}
 
 	public void setCustomerName(String name){

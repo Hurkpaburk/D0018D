@@ -57,6 +57,15 @@ public class TestFile {
 		System.out.println(customer2.toString());
 		System.out.println(customer3.toString());
 		
+		customer2.removeAccount(customer2.getAccount(12));
+		customer2.removeAccount(customer2.getAccount(1));
+		customer2.removeAccount(customer2.getAccount(3));
+		System.out.println(customer2.toString());
+		customer2.removeAccount(customer2.getAccount(566));
+		
+		System.out.println("END OF ACCOUNT TEST!");
+		
+		System.out.println("START OF CUSTOMER TEST!");
 		
 
 		

@@ -1,4 +1,3 @@
-import java.math.*;
 import java.util.*;
 
 public class BankLogic {
@@ -72,11 +71,13 @@ public class BankLogic {
 			
 			for (int i = startAccount; i<nextAccount; i++) {
 				SavingsAccount theAccount = thePerson.getAccount(i);
-				removedCustomer.append("Closed Account: " + closeAccount(pNr,accountId) + ", Saldo: " + theAccount.getBalance() + ", Ränta: " + theAccount.getInterest() + "\n");
-				thePerson.removeAccount(accountId);
+				if(theAccount != null) {
+					removedCustomer.append("Closed Account: " + closeAccount(pNr,i) + ", Saldo: " + theAccount.getBalance() + ", Ränta: " + theAccount.getInterest() + "\n");
+					thePerson.removeAccount(theAccount);
+				}
 			}
+			customer.remove(thePerson);
 			return removedCustomer.toString();
-			customer.remove(thePerson)
 		}
 		return null;
 	}
