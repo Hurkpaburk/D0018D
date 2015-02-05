@@ -99,5 +99,11 @@ public class TestFile {
 		System.out.println("Info Customer: \n" + bank.infoCustomer(12345L));
 		System.out.println("Info Customer: \n" + bank.infoCustomer(123456L));
 		
+		String removedAccount =  bank.closeAccount(12345L, 1001);		
+		System.out.println("Removed Account: " + removedAccount);
+		System.out.println("Info Customer: \n" + bank.infoCustomer(12345L));
+		addedAccount = bank.addSavingsAccount(123456L, 1001);
+		System.out.println("Info Customer: \n" + bank.infoCustomer(123456L));
+		
 	}
 }
