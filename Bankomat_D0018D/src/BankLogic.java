@@ -10,27 +10,34 @@ public class BankLogic {
 	//****************************************************************** 
 
 	// Instance Variables
-	private static ArrayList<Customer> customer;
-	private static int startAccount =  1001;
-	private int nextAccount;
+	private ArrayList<Customer> customer;
+	private static final int startAccount =  1001;
+	private static int nextAccount;
 
 	// Constructor
-
+	
+	// Default Constructor
+	public BankLogic() {
+		nextAccount = startAccount;
+		customer = new ArrayList<Customer>();
+	}
+	
 	// Metohds
 	// Public Methods
 
 	public String infoBank() {
-		String the = new String("All Customers:\n");
+		String the = new String("All Customers:");
 		StringBuilder info = new StringBuilder(the);
 		for(Customer i: customer) {
 			info.append("\n" + i.getCustomerName() + ";");
 		}
+		System.out.println(info.toString());
 		return info.toString();
 	}
 
 
 	public boolean addCustomer(String name, long pNr) {
-		if(existCustomerPn(pNr) == null) {
+		if(existCustomerPn(pNr) != null) {
 			// No New Customer Created due to existing pNr
 			return false;
 		}
@@ -68,7 +75,6 @@ public class BankLogic {
 		if(thePerson != null) {
 			String customerName = new String(thePerson.getCustomerName() +"\n");
 			StringBuilder removedCustomer = new StringBuilder(customerName);
-			
 			for (int i = startAccount; i<nextAccount; i++) {
 				SavingsAccount theAccount = thePerson.getAccount(i);
 				if(theAccount != null) {
@@ -84,15 +90,17 @@ public class BankLogic {
 	
 
 	public int addSavingsAccount(long pNr, int accountId) {
-		int accountAdded = accountId;
-		Customer thePerson = existCustomerPn(pNr);
-		if(thePerson != null) {
-			accountAdded = thePerson.addAccount(accountId, "Sparkonto", 0);
-			return accountAdded; 
+		int accountAdded = -1;
+		System.out.println("Next Account: "  + nextAccount);
+		if ((accountId >= nextAccount) && (accountId >= startAccount)) {
+			Customer thePerson = existCustomerPn(pNr);
+			if(thePerson != null) {
+				accountAdded = thePerson.addAccount(accountId, "Sparkonto", 0);
+				nextAccount = accountAdded + 1;
+				System.out.println(accountAdded);
+			}
 		}
-		else {
-			return -1;
-		}
+		return accountAdded;
 	}
 
 	public String infoAccount(long pNr, int accountId) {

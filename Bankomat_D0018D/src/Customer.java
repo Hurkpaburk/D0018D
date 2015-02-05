@@ -12,7 +12,7 @@ public class Customer {
 	// Instance Variables
 	private String name;
 	private long personnummer;
-	private static ArrayList<SavingsAccount> account; // Static to share between all instances of Customer to avoid duplicate account number
+	private ArrayList<SavingsAccount> account; // Static to share between all instances of Customer to avoid duplicate account number
 	
 	
 	// Constructor

@@ -3,7 +3,7 @@ import java.util.*;
 public class TestFile {
 	
 	public static void main(String []args){
-		
+		/*
 		System.out.println("START OF ACCOUNT TEST!");
 		int theAccountNumber = 1234;		
 		String theAccountType = "Sparkonto";
@@ -64,10 +64,40 @@ public class TestFile {
 		customer2.removeAccount(customer2.getAccount(566));
 		
 		System.out.println("END OF ACCOUNT TEST!");
+		*/
+		System.out.println("START OF BANK TEST!");
 		
-		System.out.println("START OF CUSTOMER TEST!");
-		
+		BankLogic bank = new BankLogic();
+		bank.addCustomer("Pelle Persson", 12345L);
+		int addedAccount = bank.addSavingsAccount(12345L, 999);
+		System.out.println("Added Account: " + addedAccount);
+		System.out.println("Added Customer: " + bank.infoCustomer(12345L));
+		System.out.println("Added Bank: " + bank.infoBank());
+		addedAccount = bank.addSavingsAccount(12345L, 1001);
+		System.out.println("Added Account: " + addedAccount);
 
+		addedAccount = bank.addSavingsAccount(12345L, 1005);
+		System.out.println("Added Account: " + addedAccount);
+
+		addedAccount = bank.addSavingsAccount(12345L, 1003);
+		System.out.println("Added Account: " + addedAccount);
+		addedAccount = bank.addSavingsAccount(12345L, 1003);
+		System.out.println("Added Account: " + addedAccount);
+		System.out.println("Added Bank: " + bank.infoBank());
+		
+		System.out.println("NEW CUSTOMER");
+		bank.addCustomer("Elin Eriksson", 123456L);
+		addedAccount = bank.addSavingsAccount(123456L, 999);
+		System.out.println("Added Account: " + addedAccount);
+		System.out.println("Added Customer: " + bank.infoCustomer(123456L));
+		addedAccount = bank.addSavingsAccount(123456L, 1002);
+		System.out.println("Added Account: " + addedAccount);
+		addedAccount = bank.addSavingsAccount(123456L, 1006);
+		System.out.println("Added Account: " + addedAccount); 
+		
+		
+		System.out.println("Info Customer: \n" + bank.infoCustomer(12345L));
+		System.out.println("Info Customer: \n" + bank.infoCustomer(123456L));
 		
 	}
 }
