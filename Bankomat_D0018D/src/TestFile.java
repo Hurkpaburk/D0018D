@@ -110,8 +110,8 @@ public class TestFile {
 		*/
 		
 		System.out.println("START OF BANK TEST!");
-		BankMenu bankTest = new BankMenu();
-		bankTest.test();
+		BankMenu2 bankTest = new BankMenu2();
+		bankTest.test(); 
 		
 	}
 }
