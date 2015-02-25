@@ -43,7 +43,7 @@ public class Customer {
 			return -1;
 		}
 		else { // Account does not exist, create new
-			account.add(new SavingsAccount(theAccountNumber, theAccountType, theTransaction));
+			account.add(new SavingsAccount(theAccountNumber, theTransaction));
 			return theAccountNumber;
 		}
 	}

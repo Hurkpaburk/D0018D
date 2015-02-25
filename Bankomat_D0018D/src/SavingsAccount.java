@@ -1,5 +1,5 @@
 
-public class SavingsAccount {
+public class SavingsAccount extends BankAccount {
 	//****************************************************************** 
 	// Programmerare: Johan Bergström, johbef-4@student.ltu.se
 	// Datum: 2015-02-05
@@ -9,23 +9,20 @@ public class SavingsAccount {
 	//****************************************************************** 
 
 	// Instance Variables
-	private int  accountNumber;
-	private double balance;
-	private String accountType;
-	private static final double interestRate = 2;
+	private int numWithdraws;
 	
 	// Constructor
-	public SavingsAccount(int theAccountNumber, String theAccountType, int theTransaction) {
-		  accountNumber = theAccountNumber;
-		  accountType = theAccountType;
-		  balance = balance + theTransaction;
+	public SavingsAccount(int theAccountNumber, int theTransaction) {
+		  super(theAccountNumber, theTransaction);
+		  accountType = "Sparkonto";
+		  numWithdraws = 0;
 	}	
 	
 	// Default Constructor
 	public SavingsAccount() {
-		  accountNumber = 0000;
-		  accountType = "Sparkonto";
-		  balance = 0;
+		 super();
+		 accountType = "Sparkonto";
+		 numWithdraws = 0;
 	}
 	
 	// Public methods
@@ -36,54 +33,28 @@ public class SavingsAccount {
 	// Returvärde: None
 	//------------------------------------------------------
 	public void withdraw(double theTransaction) {
-		balance = balance - theTransaction;
+		
+		if (numWithdraws >= 1) {
+			balance = balance - theTransaction*1.01;
+		}
+		else {
+			balance = balance - theTransaction;
+		}
+		numWithdraws++;
+		transactions.add(date.format(date) + ", Wtihdraw: " + theTransaction + ", Balance: " + balance);
+
 	}
-	
-	//------------------------------------------------------
-	// Beskrivning: deposit amount from balance
-	// Inparametrar: theTransaction - Amount to change the account balance with
-	// Returvärde: None
-	//------------------------------------------------------
-	public void deposit(double theTransaction) {
-		balance = balance + theTransaction;
-	}
-	
-	//------------------------------------------------------
-	// Beskrivning: get the account balance
-	// Inparametrar: None
-	// Returvärde: balance - Account balance
-	//------------------------------------------------------
-	public double getBalance() {
-		return balance;
-	}
-	
-	//------------------------------------------------------
-	// Beskrivning: get the account number
-	// Inparametrar: None
-	// Returvärde: accountNumber - Account number
-	//------------------------------------------------------
-	public int getAccountNumber() {
-		return accountNumber;
-	}
-	
-	//------------------------------------------------------
-	// Beskrivning: get the account interest
-	// Inparametrar: None
-	// Returvärde: Interest - balance with interest
-	//------------------------------------------------------
-	public double getInterest() {
-		return balance*(interestRate/100);
-	}
-	
+
 	//------------------------------------------------------
 	// Beskrivning: get the account information
 	// Inparametrar: None
 	// Returvärde: info - Account information
 	//------------------------------------------------------
 	public String toString(){
-		
+
 		String accountInfo = new String(accountNumber + ", " + balance + ", " + accountType + ", " + interestRate);
 		return accountInfo;
 	}
 }
-	
+
+

@@ -1,3 +1,6 @@
+import java.text.*;
+import java.util.*;
+
 
 public class BankAccount {
 	//****************************************************************** 
@@ -9,22 +12,29 @@ public class BankAccount {
 	//****************************************************************** 
 
 	// Instance Variables
-	private int  accountNumber;
-	private double balance;
-	private String accountType;
+	protected int  accountNumber;
+	protected double balance;
+	protected String accountType;
+	protected double interestRate;
+	protected static ArrayList<String> transactions;
+	protected DateFormat  date; 
+
 	
 	// Constructor
-	public BankAccount(int theAccountNumber, String theAccountType, int theTransaction) {
+	public BankAccount(int theAccountNumber, int theTransaction) {
 		  accountNumber = theAccountNumber;
-		  accountType = theAccountType;
+		  accountType = "Default";
 		  balance = balance + theTransaction;
+		  transactions = new ArrayList<String>();
 	}	
 	
 	// Default Constructor
 	public BankAccount() {
 		  accountNumber = 0000;
-		  accountType = "Sparkonto";
+		  accountType = "Default";
 		  balance = 0;
+		  interestRate = 2;
+		  transactions = new ArrayList<String>();
 	}
 	
 	// Public methods
@@ -36,6 +46,8 @@ public class BankAccount {
 	//------------------------------------------------------
 	public void withdraw(double theTransaction) {
 		balance = balance - theTransaction;
+		transactions.add(date.getInstance().get + ", Wtihdraw: " + theTransaction + ", Balance: " + balance);
+
 	}
 	
 	//------------------------------------------------------
@@ -45,6 +57,7 @@ public class BankAccount {
 	//------------------------------------------------------
 	public void deposit(double theTransaction) {
 		balance = balance + theTransaction;
+		transactions.add(date.format(date) + ", Deposit: " + theTransaction + ", Balance: " + balance);
 	}
 	
 	//------------------------------------------------------
@@ -72,6 +85,16 @@ public class BankAccount {
 	//------------------------------------------------------
 	public double getInterest() {
 		return balance*(interestRate/100);
+	}
+	
+	public String getTransactions() {
+
+		StringBuilder info = new StringBuilder(); // Stringbuilder to enable append of accounts
+		for(String i: transactions) { // loop over accounts
+			 info.append("\n" + i.toString()); 
+		}
+		info.append("\n");
+		return info.toString();
 	}
 	
 	//------------------------------------------------------
