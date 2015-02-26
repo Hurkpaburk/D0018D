@@ -16,6 +16,7 @@ public class SavingsAccount extends BankAccount {
 		  super(theAccountNumber, theTransaction);
 		  accountType = "Sparkonto";
 		  numWithdraws = 0;
+		  interestRate = 2;
 	}	
 	
 	// Default Constructor
@@ -23,6 +24,7 @@ public class SavingsAccount extends BankAccount {
 		 super();
 		 accountType = "Sparkonto";
 		 numWithdraws = 0;
+		 interestRate = 2;
 	}
 	
 	// Public methods
@@ -33,28 +35,21 @@ public class SavingsAccount extends BankAccount {
 	// Returvärde: None
 	//------------------------------------------------------
 	public void withdraw(double theTransaction) {
-		
-		if (numWithdraws >= 1) {
-			balance = balance - theTransaction*1.01;
+
+		double charge = 1.01;
+		if (numWithdraws >= 1) { // Number of withdraws is larger then one
+			if (balance-theTransaction*charge > 0) { // Balance after transaction has to be larger then zero
+				balance = balance - theTransaction*charge;
+				numWithdraws++;
+				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
+			}
 		}
 		else {
-			balance = balance - theTransaction;
+			if (balance-theTransaction > 0) { // Balance after transaction has to be larger then zero
+				balance = balance - theTransaction;
+				numWithdraws++;
+				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
+			}
 		}
-		numWithdraws++;
-		transactions.add(date.format(date) + ", Wtihdraw: " + theTransaction + ", Balance: " + balance);
-
-	}
-
-	//------------------------------------------------------
-	// Beskrivning: get the account information
-	// Inparametrar: None
-	// Returvärde: info - Account information
-	//------------------------------------------------------
-	public String toString(){
-
-		String accountInfo = new String(accountNumber + ", " + balance + ", " + accountType + ", " + interestRate);
-		return accountInfo;
 	}
 }
-
-

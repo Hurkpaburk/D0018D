@@ -33,7 +33,6 @@ public class BankAccount {
 		  accountNumber = 0000;
 		  accountType = "Default";
 		  balance = 0;
-		  interestRate = 2;
 		  transactions = new ArrayList<String>();
 	}
 	
@@ -46,7 +45,7 @@ public class BankAccount {
 	//------------------------------------------------------
 	public void withdraw(double theTransaction) {
 		balance = balance - theTransaction;
-		transactions.add(date.getInstance().get + ", Wtihdraw: " + theTransaction + ", Balance: " + balance);
+		transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
 
 	}
 	
@@ -57,7 +56,7 @@ public class BankAccount {
 	//------------------------------------------------------
 	public void deposit(double theTransaction) {
 		balance = balance + theTransaction;
-		transactions.add(date.format(date) + ", Deposit: " + theTransaction + ", Balance: " + balance);
+		transactions.add(getTime() + ", Deposit: " + theTransaction + ", Balance: " + balance);
 	}
 	
 	//------------------------------------------------------
@@ -87,6 +86,11 @@ public class BankAccount {
 		return balance*(interestRate/100);
 	}
 	
+	//------------------------------------------------------
+	// Beskrivning: get transaction history
+	// Inparametrar: None
+	// Returvärde: info - transaction history
+	//------------------------------------------------------
 	public String getTransactions() {
 
 		StringBuilder info = new StringBuilder(); // Stringbuilder to enable append of accounts
@@ -98,14 +102,38 @@ public class BankAccount {
 	}
 	
 	//------------------------------------------------------
+	// Beskrivning: get account type
+	// Inparametrar: None
+	// Returvärde: info - account type
+	//------------------------------------------------------
+	public String getaccountType() {
+
+		String accountInfo = new String(accountType);
+		return accountInfo;
+	}
+	
+	//------------------------------------------------------
 	// Beskrivning: get the account information
 	// Inparametrar: None
 	// Returvärde: info - Account information
 	//------------------------------------------------------
-	public String toString(){
+	public String toString() {
 		
 		String accountInfo = new String(accountNumber + ", " + balance + ", " + accountType + ", " + interestRate);
 		return accountInfo;
+	}	
+
+
+	// Protected methods
+	//------------------------------------------------------
+	// Beskrivning: Get date and time
+	// Inparametrar: None
+	// Returvärde: time - Date and time
+	//------------------------------------------------------
+	protected String getTime() {
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/YY HH:mm:ss");   
+		Calendar calendar = Calendar.getInstance();
+		return dateFormat.format(calendar.getTime());
 	}
 }
-	

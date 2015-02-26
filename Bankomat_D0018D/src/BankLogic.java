@@ -10,7 +10,8 @@ public class BankLogic {
 	//****************************************************************** 
 
 	// Instance Variables
-	private ArrayList<Customer> customer;
+	private ArrayList<Customer> customer; // Bank customer list
+	private ArrayList<Object> accountList; // Bank account list. Accounts will not be removed from this list if they are closed. 
 	private static final int startAccount =  1001;
 	private static int nextAccount;
 	
@@ -18,6 +19,7 @@ public class BankLogic {
 	public BankLogic() {
 		nextAccount = startAccount;
 		customer = new ArrayList<Customer>();
+		accountList = new ArrayList<Object>();
 	}
 	
 	// Metohds
@@ -97,10 +99,10 @@ public class BankLogic {
 			String customerName = new String(thePerson.getCustomerName() +"\n");
 			StringBuilder removedCustomer = new StringBuilder(customerName); // stringbuilder to append customer information
 			for (int i = startAccount; i<nextAccount; i++) { // go over all created bank account numbers
-				SavingsAccount theAccount = thePerson.getAccount(i); 
+				BankAccount theAccount = thePerson.getAccount(i); 
 				if(theAccount != null) { // if customer owns bank account
 					removedCustomer.append("Closed Account: " + closeAccount(pNr,i) + "\n"); // Append account information
-					thePerson.removeAccount(theAccount); // Remove account from list
+					thePerson.removeAccount(theAccount); // Remove account from customer list but not bank list
 				}
 			}
 			customer.remove(thePerson); // remove customer from list
@@ -120,6 +122,23 @@ public class BankLogic {
 		if(thePerson != null) { // If customer exists
 			accountAdded = thePerson.addAccount(nextAccount, "Sparkonto", 0); // create account with 0 deposit
 			nextAccount++; // Increase the number for next available bank account
+			accountList.add(thePerson.getAccount(nextAccount)); // Add account to Bank account List
+		}
+		return accountAdded;
+	}
+	
+	//------------------------------------------------------
+	// Beskrivning: Add credit account for customer
+	// Inparametrar: pNr - personnummer
+	// Returvärde: Account number if created, otherwise -1 
+	//------------------------------------------------------
+	public int addCreditAccount(long pNr) {
+		int accountAdded = -1;
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) { // If customer exists
+			accountAdded = thePerson.addAccount(nextAccount, "Kreditkonto", 0); // create account with 0 deposit
+			nextAccount++; // Increase the number for next available bank account
+			accountList.add(thePerson.getAccount(nextAccount)); // Add account to Bank account List
 		}
 		return accountAdded;
 	}
@@ -140,6 +159,20 @@ public class BankLogic {
 	}
 	
 	//------------------------------------------------------
+	// Beskrivning: Information about an accounts transactions
+	// Inparametrar: pNr - personnummer, accountId - Account number
+	// Returvärde: Information transcation for a customers specific account 
+	//------------------------------------------------------
+	public String infoTransactions(long pNr, int accountId) {
+	Customer thePerson = existCustomerPn(pNr); 
+	if(thePerson != null) { // Does customer exist
+		return thePerson.getAccount(accountId).getTransactions(); // return account information
+	}
+	else {
+		return new String("No matching Customer for Bank!");
+	}
+}
+	//------------------------------------------------------
 	// Beskrivning: Deposit to a account
 	// Inparametrar: pNr - personnummer, accountId - Account Number, amount - Amount to deposit
 	// Returvärde: True or false depending on success
@@ -147,7 +180,7 @@ public class BankLogic {
 	public boolean deposit(long pNr, int accountId, double amount) {
 		Customer thePerson = existCustomerPn(pNr);
 		if(thePerson != null) { // exist customer
-			SavingsAccount theAccount = thePerson.getAccount(accountId);
+			BankAccount theAccount = thePerson.getAccount(accountId);
 			if (theAccount != null) { // exist account for customer
 				theAccount.deposit(amount); // deposit 
 				return true;
@@ -164,12 +197,10 @@ public class BankLogic {
 	public boolean withdraw(long pNr, int accountId, double amount) {
 		Customer thePerson = existCustomerPn(pNr);
 		if(thePerson != null) { // exist customer
-			SavingsAccount theAccount = thePerson.getAccount(accountId);
+			BankAccount theAccount = thePerson.getAccount(accountId);
 			if (theAccount != null) { // exist account for customer
-				if(theAccount.getBalance() > 0) { // Can only withdraw if balance is larger then 0
-					theAccount.withdraw(amount); // withdraw
-					return true;
-				}
+				theAccount.withdraw(amount); // withdraw
+				return true;
 			}
 		}
 		return false;
@@ -183,10 +214,10 @@ public class BankLogic {
 	public String closeAccount(long pNr, int accountId) {
 		Customer thePerson = existCustomerPn(pNr);
 		if(thePerson != null) { // exist customer
-			SavingsAccount theAccount = thePerson.getAccount(accountId);
+			BankAccount theAccount = thePerson.getAccount(accountId);
 			if (theAccount != null) { // exist account
 				String theBalance = new String("Saldo: " + theAccount.getBalance() + ", R�nta: " + theAccount.getInterest()); 
-				thePerson.removeAccount(theAccount); // remove account
+				thePerson.removeAccount(theAccount); // remove account from customer but not from bank list
 				return theBalance; 
 			}
 		}

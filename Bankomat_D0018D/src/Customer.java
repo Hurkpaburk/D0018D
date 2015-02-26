@@ -12,21 +12,21 @@ public class Customer {
 	// Instance Variables
 	private String name;
 	private long personnummer;
-	private ArrayList<SavingsAccount> account; // Static to share between all instances of Customer to avoid duplicate account number
+	private ArrayList<BankAccount> account; // Static to share between all instances of Customer to avoid duplicate account number
 	
 	
 	// Constructor
 	public Customer(String theName, long thePersonnummer) {
 		  name = theName;
 		  personnummer = thePersonnummer;
-		  account = new ArrayList<SavingsAccount>();
+		  account = new ArrayList<BankAccount>();
 	}	
 	
 	// Default Constructor
 	public Customer() {
 		  name = "John Doe";
 		  personnummer = 0000000000L;
-		  account = new ArrayList<SavingsAccount>();
+		  account = new ArrayList<BankAccount>();
 	}
 	
 	// Methods
@@ -37,13 +37,22 @@ public class Customer {
 	// Inparametrar: theAccountNumber - New account number, theAccountType - Account Type, theTransaction - Initial deposit
 	// Returv‰rde: theAccountNumber - Account Number, -1 if not created
 	//------------------------------------------------------
+	
 	public int addAccount(int theAccountNumber, String theAccountType, int theTransaction) {
-		SavingsAccount tempAccount = existAccountNumber(theAccountNumber);
+		BankAccount tempAccount = existAccountNumber(theAccountNumber);
 		if(tempAccount != null) { // Check if account exists
 			return -1;
 		}
-		else { // Account does not exist, create new
+		else if(theAccountType == "Sparkonto") { // Account does not exist, create new Sparkonto
 			account.add(new SavingsAccount(theAccountNumber, theTransaction));
+			return theAccountNumber;
+		}
+		else if(theAccountType == "Kreditkonto") { // Account does not exist, create new Kreditkonto
+			account.add(new CreditAccount(theAccountNumber, theTransaction));
+			return theAccountNumber;
+		}
+		else { // Not Credit or Savings Account, create default account
+			account.add(new BankAccount(theAccountNumber, theTransaction));
 			return theAccountNumber;
 		}
 	}
@@ -53,7 +62,7 @@ public class Customer {
 	// Inparametrar: theAccount - Account to be removed
 	// Returv√§rde: None
 	//------------------------------------------------------
-	public void removeAccount(SavingsAccount theAccount) {
+	public void removeAccount(BankAccount theAccount) {
 		account.remove(theAccount);
 	}
 
@@ -63,7 +72,7 @@ public class Customer {
 	// Returv‰rde: Account Information
 	//------------------------------------------------------
 	public String getAccountInfo(int theAccountNumber){
-		SavingsAccount theAccount = existAccountNumber(theAccountNumber);
+		BankAccount theAccount = existAccountNumber(theAccountNumber);
 		if(theAccount != null) { // Check if count exists
 			return theAccount.toString(); 
 		}
@@ -77,8 +86,8 @@ public class Customer {
 	// Inparametrar: theAccountNumber - New account number
 	// Returv‰rde: savingsAccount - Account object
 	//------------------------------------------------------
-	public SavingsAccount getAccount(int theAccountNumber){
-		SavingsAccount theAccount = existAccountNumber(theAccountNumber);
+	public BankAccount getAccount(int theAccountNumber){
+		BankAccount theAccount = existAccountNumber(theAccountNumber);
 		if(theAccount != null) { // Check if account exists
 			return theAccount;
 		}
@@ -114,7 +123,7 @@ public class Customer {
 	public String toString(){
 		String customerInfo = new String(personnummer + ", " + name + "; ");
 		StringBuilder info = new StringBuilder(customerInfo); // Stringbuilder to enable append of accounts
-		for(SavingsAccount i: account) { // loop over accounts
+		for(BankAccount i: account) { // loop over accounts
 			 info.append("\n" + i.toString()); 
 		}
 		info.append("\n");
@@ -138,8 +147,8 @@ public class Customer {
 	// Inparametrar: theAccountNumber - Account number
 	// Returv‰rde: Account number object
 	//------------------------------------------------------	
-	private SavingsAccount existAccountNumber(int theAccountNumber) {
-		for(SavingsAccount i: account) { // Go over list with accounts
+	private BankAccount existAccountNumber(int theAccountNumber) {
+		for(BankAccount i: account) { // Go over list with accounts
 			if(theAccountNumber == i.getAccountNumber()) { 
 				return i; // return object
 			}

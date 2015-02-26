@@ -3,7 +3,7 @@ import java.util.*;
 public class TestFile {
 	
 	public static void main(String []args){
-		
+		/*
 		System.out.println("START OF ACCOUNT TEST!");
 		int theAccountNumber = 1234;		
 		int theTransaction = 100;
@@ -53,18 +53,75 @@ public class TestFile {
 		 testAccountTwo.withdraw(withdraw);
 		System.out.println(testAccountTwo.getBalance());
 		
-		 withdraw2 = 50;
-		 testAccountTwo.withdraw(withdraw2);
+		withdraw2 = 50;
+		testAccountTwo.withdraw(withdraw2);
 		System.out.println("withdraw 2 " + testAccountTwo.getBalance());
+		
+		System.out.println(testAccountTwo.getTransactions());
+
+		double withdraw3 = 43.5;
+		testAccountTwo.withdraw(withdraw3);
+		System.out.println("withdraw 3 " + testAccountTwo.getBalance());
+		
+		System.out.println(testAccountTwo.getTransactions());
+		
+		double withdraw4 = 5000;
+		testAccountTwo.withdraw(withdraw4);
+		System.out.println("withdraw 3 " + testAccountTwo.getBalance());
+		
 		System.out.println(testAccountTwo.getTransactions());
 		
 		System.out.println("*** Test Credit account ***");
 		
+		theAccountNumber = 1234;		
+		theTransaction = 5000;
+
+		CreditAccount testAccountThree = new CreditAccount(theAccountNumber, theTransaction);
 		
 		
+		System.out.println(testAccountThree.getBalance());
+		System.out.println(testAccountThree.toString());
+		System.out.println(testAccountThree.getInterest());
+		System.out.println(testAccountThree.getAccountNumber());
 		
-		System.out.println("END OF ACCOUNT TEST!");
+		deposit = 55;
 		
+		testAccountThree.deposit(deposit);
+		System.out.println(testAccountThree.getBalance());
+		
+		 withdraw = 10;
+		 testAccountThree.withdraw(withdraw);
+		System.out.println(testAccountThree.getBalance());
+		
+		withdraw2 = 50;
+		testAccountThree.withdraw(withdraw2);
+		System.out.println("withdraw 2 " + testAccountThree.getBalance());
+		
+		System.out.println(testAccountThree.getTransactions());
+
+		System.out.println(testAccountThree.getInterest());
+
+		
+		withdraw3 = 5200;
+		testAccountThree.withdraw(withdraw3);
+		System.out.println("withdraw 3 " + testAccountThree.getBalance());
+		
+		System.out.println(testAccountThree.getTransactions());
+		
+		System.out.println(testAccountThree.getInterest());
+
+		
+		withdraw4 = 5000;
+		testAccountThree.withdraw(withdraw4);
+		System.out.println("withdraw 3 " + testAccountThree.getBalance());
+		
+		System.out.println(testAccountThree.getTransactions());
+		
+		System.out.println(testAccountThree.getInterest());
+
+		
+		System.out.println("END OF CREDIT TEST!");
+		*/
 		/*
 		System.out.println("START OF CUSTOMER TEST!");
 		Customer customer1 = new Customer("Pelle Persson", 4612204321L);
@@ -136,11 +193,11 @@ public class TestFile {
 		System.out.println("END OF BANKLOGIC TEST!");
 		*/
 		
-		/*
+		
 		 System.out.println("START OF BANK TEST!");
 		BankMenu2 bankTest = new BankMenu2();
 		bankTest.test();
-		*/ 
+		 
 		
 	}
 }

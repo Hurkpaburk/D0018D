@@ -1,5 +1,5 @@
 
-public class CreditAccount {
+public class CreditAccount extends BankAccount {
 	//****************************************************************** 
 	// Programmerare: Johan Bergström, johbef-4@student.ltu.se
 	// Datum: 2015-02-18
@@ -9,62 +9,24 @@ public class CreditAccount {
 	//****************************************************************** 
 
 	// Instance Variables
-	private int  accountNumber;
-	private double balance;
-	private String accountType;
-	private static final double interestRate = 2;
+	private int creditLimit = 5000;
+	private int debtInterest = 7;
 	
 	// Constructor
-	public CreditAccount(int theAccountNumber, String theAccountType, int theTransaction) {
-		  accountNumber = theAccountNumber;
-		  accountType = theAccountType;
-		  balance = balance + theTransaction;
+	public CreditAccount(int theAccountNumber, int theTransaction) {
+		  super(theAccountNumber, theTransaction);
+		  accountType = "CreditAccount";
+		  interestRate = 0.5;
 	}	
 	
 	// Default Constructor
 	public CreditAccount() {
-		  accountNumber = 0000;
-		  accountType = "Sparkonto";
-		  balance = 0;
+		 super();
+		 accountType = "CreditAccount";
+		 interestRate = 0.5;
 	}
 	
 	// Public methods
-	
-	//------------------------------------------------------
-	// Beskrivning: Withdraw amount from balance 
-	// Inparametrar: theTransaction - Amount to change the account balance with
-	// Returvärde: None
-	//------------------------------------------------------
-	public void withdraw(double theTransaction) {
-		balance = balance - theTransaction;
-	}
-	
-	//------------------------------------------------------
-	// Beskrivning: deposit amount from balance
-	// Inparametrar: theTransaction - Amount to change the account balance with
-	// Returvärde: None
-	//------------------------------------------------------
-	public void deposit(double theTransaction) {
-		balance = balance + theTransaction;
-	}
-	
-	//------------------------------------------------------
-	// Beskrivning: get the account balance
-	// Inparametrar: None
-	// Returvärde: balance - Account balance
-	//------------------------------------------------------
-	public double getBalance() {
-		return balance;
-	}
-	
-	//------------------------------------------------------
-	// Beskrivning: get the account number
-	// Inparametrar: None
-	// Returvärde: accountNumber - Account number
-	//------------------------------------------------------
-	public int getAccountNumber() {
-		return accountNumber;
-	}
 	
 	//------------------------------------------------------
 	// Beskrivning: get the account interest
@@ -72,18 +34,25 @@ public class CreditAccount {
 	// Returvärde: Interest - balance with interest
 	//------------------------------------------------------
 	public double getInterest() {
-		return balance*(interestRate/100);
+		if (balance <= 0) {
+			return balance*(debtInterest/100);	
+		}
+		else {
+			return balance*(interestRate/100);
+		}
 	}
-	
+
 	//------------------------------------------------------
-	// Beskrivning: get the account information
-	// Inparametrar: None
-	// Returvärde: info - Account information
+	// Beskrivning: Withdraw amount from balance 
+	// Inparametrar: theTransaction - Amount to change the account balance with
+	// Returvärde: None
 	//------------------------------------------------------
-	public String toString(){
+	public void withdraw(double theTransaction) {
 		
-		String accountInfo = new String(accountNumber + ", " + balance + ", " + accountType + ", " + interestRate);
-		return accountInfo;
+		if (balance-theTransaction > -creditLimit) { // Balance after transaction has to be larger then zero
+			balance = balance - theTransaction;
+			transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
+		}
 	}
 }
 	
