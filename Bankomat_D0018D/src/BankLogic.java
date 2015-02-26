@@ -195,15 +195,16 @@ public class BankLogic {
 	// Returvärde: True or false depending on success
 	//------------------------------------------------------
 	public boolean withdraw(long pNr, int accountId, double amount) {
+		boolean temp = false; 
 		Customer thePerson = existCustomerPn(pNr);
 		if(thePerson != null) { // exist customer
 			BankAccount theAccount = thePerson.getAccount(accountId);
 			if (theAccount != null) { // exist account for customer
-				theAccount.withdraw(amount); // withdraw
-				return true;
+				temp = theAccount.withdraw(amount); // withdraw
+				return temp;
 			}
 		}
-		return false;
+		return temp;
 	}
 	
 	//------------------------------------------------------

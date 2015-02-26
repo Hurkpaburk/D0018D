@@ -2,7 +2,7 @@ import java.text.*;
 import java.util.*;
 
 
-public class BankAccount {
+public abstract class BankAccount {
 	//****************************************************************** 
 	// Programmerare: Johan Bergström, johbef-4@student.ltu.se
 	// Datum: 2015-02-18
@@ -43,11 +43,7 @@ public class BankAccount {
 	// Inparametrar: theTransaction - Amount to change the account balance with
 	// Returvärde: None
 	//------------------------------------------------------
-	public void withdraw(double theTransaction) {
-		balance = balance - theTransaction;
-		transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
-
-	}
+	abstract boolean withdraw(double theTransaction);
 	
 	//------------------------------------------------------
 	// Beskrivning: deposit amount from balance
@@ -93,7 +89,8 @@ public class BankAccount {
 	//------------------------------------------------------
 	public String getTransactions() {
 
-		StringBuilder info = new StringBuilder(); // Stringbuilder to enable append of accounts
+		String accountInfo = new String();
+		StringBuilder info = new StringBuilder(toString()); // Stringbuilder to enable append of accounts
 		for(String i: transactions) { // loop over accounts
 			 info.append("\n" + i.toString()); 
 		}
@@ -119,7 +116,7 @@ public class BankAccount {
 	//------------------------------------------------------
 	public String toString() {
 		
-		String accountInfo = new String(accountNumber + ", " + balance + ", " + accountType + ", " + interestRate);
+		String accountInfo = new String("Kontonummer: " + accountNumber + ", Saldo: " + balance + ", Kontotyp: " + accountType + ", R�ntesats: " + interestRate);
 		return accountInfo;
 	}	
 

@@ -9,8 +9,8 @@ public class CreditAccount extends BankAccount {
 	//****************************************************************** 
 
 	// Instance Variables
-	private int creditLimit = 5000;
-	private int debtInterest = 7;
+	private double creditLimit = 5000;
+	private double debtInterest = 7;
 	
 	// Constructor
 	public CreditAccount(int theAccountNumber, int theTransaction) {
@@ -35,7 +35,10 @@ public class CreditAccount extends BankAccount {
 	//------------------------------------------------------
 	public double getInterest() {
 		if (balance <= 0) {
+			System.out.println("***** HÄR SALDO NEGATIVT *****");
+			System.out.println(balance*(debtInterest/100));
 			return balance*(debtInterest/100);	
+			
 		}
 		else {
 			return balance*(interestRate/100);
@@ -47,11 +50,14 @@ public class CreditAccount extends BankAccount {
 	// Inparametrar: theTransaction - Amount to change the account balance with
 	// ReturvÃ¤rde: None
 	//------------------------------------------------------
-	public void withdraw(double theTransaction) {
-		
-		if (balance-theTransaction > -creditLimit) { // Balance after transaction has to be larger then zero
+	public boolean withdraw(double theTransaction) {
+		if (balance-theTransaction >= -creditLimit) { // Balance after transaction has to be larger then zero
 			balance = balance - theTransaction;
 			transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 }

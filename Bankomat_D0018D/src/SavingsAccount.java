@@ -34,22 +34,26 @@ public class SavingsAccount extends BankAccount {
 	// Inparametrar: theTransaction - Amount to change the account balance with
 	// Returvärde: None
 	//------------------------------------------------------
-	public void withdraw(double theTransaction) {
-
+	public boolean withdraw(double theTransaction) {
+		boolean temp = false;
 		double charge = 1.01;
 		if (numWithdraws >= 1) { // Number of withdraws is larger then one
-			if (balance-theTransaction*charge > 0) { // Balance after transaction has to be larger then zero
+			if (balance-theTransaction*charge >= 0) { // Balance after transaction has to be larger then zero
 				balance = balance - theTransaction*charge;
 				numWithdraws++;
 				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
+				temp = true;
 			}
 		}
 		else {
-			if (balance-theTransaction > 0) { // Balance after transaction has to be larger then zero
+			if (balance-theTransaction >= 0) { // Balance after transaction has to be larger then zero
 				balance = balance - theTransaction;
 				numWithdraws++;
 				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
+				System.out.println(balance);
+				temp = true;
 			}
 		}
+		return temp;
 	}
 }

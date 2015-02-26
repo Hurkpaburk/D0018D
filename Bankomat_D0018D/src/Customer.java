@@ -47,13 +47,12 @@ public class Customer {
 			account.add(new SavingsAccount(theAccountNumber, theTransaction));
 			return theAccountNumber;
 		}
-		else if(theAccountType == "Kreditkonto") { // Account does not exist, create new Kreditkonto
+		else if (theAccountType == "Kreditkonto") { // Account does not exist, create new Kreditkonto
 			account.add(new CreditAccount(theAccountNumber, theTransaction));
 			return theAccountNumber;
 		}
-		else { // Not Credit or Savings Account, create default account
-			account.add(new BankAccount(theAccountNumber, theTransaction));
-			return theAccountNumber;
+		else { 
+			return -1;
 		}
 	}
 
