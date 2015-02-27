@@ -46,6 +46,13 @@ public abstract class BankAccount {
 	abstract boolean withdraw(double theTransaction);
 	
 	//------------------------------------------------------
+	// Beskrivning: get the account interest
+	// Inparametrar: None
+	// Returvärde: Interest - balance with interest
+	//------------------------------------------------------
+	abstract double getInterest();
+	
+	//------------------------------------------------------
 	// Beskrivning: deposit amount from balance
 	// Inparametrar: theTransaction - Amount to change the account balance with
 	// Returvärde: None
@@ -74,15 +81,6 @@ public abstract class BankAccount {
 	}
 	
 	//------------------------------------------------------
-	// Beskrivning: get the account interest
-	// Inparametrar: None
-	// Returvärde: Interest - balance with interest
-	//------------------------------------------------------
-	public double getInterest() {
-		return balance*(interestRate/100);
-	}
-	
-	//------------------------------------------------------
 	// Beskrivning: get transaction history
 	// Inparametrar: None
 	// Returvärde: info - transaction history
@@ -97,18 +95,7 @@ public abstract class BankAccount {
 		info.append("\n");
 		return info.toString();
 	}
-	
-	//------------------------------------------------------
-	// Beskrivning: get account type
-	// Inparametrar: None
-	// Returvärde: info - account type
-	//------------------------------------------------------
-	public String getaccountType() {
-
-		String accountInfo = new String(accountType);
-		return accountInfo;
-	}
-	
+		
 	//------------------------------------------------------
 	// Beskrivning: get the account information
 	// Inparametrar: None

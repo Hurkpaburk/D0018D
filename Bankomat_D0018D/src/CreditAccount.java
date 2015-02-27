@@ -35,7 +35,6 @@ public class CreditAccount extends BankAccount {
 	//------------------------------------------------------
 	public double getInterest() {
 		if (balance <= 0) {
-			System.out.println("***** HÄR SALDO NEGATIVT *****");
 			System.out.println(balance*(debtInterest/100));
 			return balance*(debtInterest/100);	
 			

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.2">
+  <zoom_level>4</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>212</y>
+      <w>156</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>BankAccount
+--
+#accountNumber: int
+#balance: double
+#accountType: String
+#interestRate: double
+_#transactions: ArrayList&lt;String&gt;_
+#date: DateFormat
+--
++BankAccount(theAccountNumber: int, theTransaction: int)
++BankAccount()
++deposit(theTransaction: double): void
++getBalance(): double
++getAccountNumber(): int
++getTransactions(): String
++toString(): String
+#getTime(): String
+/+getInterest(): double/
+/+withdraw(): boolean/
+
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>192</x>
+      <y>324</y>
+      <w>12</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>352</y>
+      <w>156</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>SavingsAccount
+--
+-numWithdraws: int
+--
++SavingsAccount(theAccountNumber: int, theTransaction: int)
++SavingsAccount()
++getInterest(): double
++withdraw(theTransaction: double): boolean
+
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>352</y>
+      <w>156</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>CreditAccount
+--
+-creditLimit: double
+-debtInterest: double
+--
++CreditAccount(theAccountNumber: int, theTransaction: int)
++CreditAccount()
++getInterest(): double
++withdraw(theTransaction: double): boolean
+
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>112</x>
+      <y>324</y>
+      <w>12</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>284</x>
+      <y>56</y>
+      <w>220</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>BankLogic
+--
+-customer: ArrayList&lt;Customer&gt;
+-accountList: ArrayList&lt;BankAccount&gt;
+_-nextAccount: int_
+_-startAccount: int = 1001_
+--
++BankLogic()
++infoBank(): String
++addCustomer(name: String, pNr: long): boolean
++infoCustomer(pNr: long): String
++changeCustomerName(name: String, pNr: long): boolean
++removeCustomer(pNr: long): String
++addSavingsAccount(pNr: long): int
++addCreditAccount(pNr: long): int
++infoAccount(pNr: long, accountId: int): String
++infoTransactions(pNr: long, accountId: int): String
++deposit(pNr: long, accountId: int, amount: double): boolean
++withdraw(pNr: long, accountId: int, amount: double): boolean
++closeAccount(pNr: long, accountId: int): String
+-existCustomerPn(theCustomer: long): Customer
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>284</x>
+      <y>212</y>
+      <w>220</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>Customer
+--
+-name: String
+-personnummer: long
+_-account: ArrayList&lt;BankAccount&gt;_
+--
++Customer(theName: String, thePersonnummer: long)
++Customer()
++addAccount(theAccountNumber: int, theAccountType: String, theTransaction: int): int
++removeAccount(): void
++getAccountInfo(): String
++getAccount(): BankAccount
++getCustomerName(): String
++getCustomerPn(): long
++toString(): String
++setCustomerName(name: String): void
+-existAccountNumber(theAccountNumber: int): BankAccount
+
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>156</x>
+      <y>120</y>
+      <w>136</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>320.0;10.0;10.0;10.0;10.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>392</x>
+      <y>180</y>
+      <w>12</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>232</x>
+      <y>264</y>
+      <w>60</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

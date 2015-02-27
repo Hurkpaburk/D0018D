@@ -11,7 +11,7 @@ public class BankLogic {
 
 	// Instance Variables
 	private ArrayList<Customer> customer; // Bank customer list
-	private ArrayList<Object> accountList; // Bank account list. Accounts will not be removed from this list if they are closed. 
+	private ArrayList<BankAccount> accountList; // Bank account list. Accounts will not be removed from this list if they are closed. 
 	private static final int startAccount =  1001;
 	private static int nextAccount;
 	
@@ -19,7 +19,7 @@ public class BankLogic {
 	public BankLogic() {
 		nextAccount = startAccount;
 		customer = new ArrayList<Customer>();
-		accountList = new ArrayList<Object>();
+		accountList = new ArrayList<BankAccount>();
 	}
 	
 	// Metohds

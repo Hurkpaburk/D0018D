@@ -30,6 +30,15 @@ public class SavingsAccount extends BankAccount {
 	// Public methods
 	
 	//------------------------------------------------------
+	// Beskrivning: get the account interest
+	// Inparametrar: None
+	// Returvärde: Interest - balance with interest
+	//------------------------------------------------------
+	public double getInterest() {
+		return balance*(interestRate/100);
+	}
+	
+	//------------------------------------------------------
 	// Beskrivning: Withdraw amount from balance 
 	// Inparametrar: theTransaction - Amount to change the account balance with
 	// Returvärde: None
