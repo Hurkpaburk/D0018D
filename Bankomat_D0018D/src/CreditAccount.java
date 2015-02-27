@@ -2,8 +2,8 @@
 public class CreditAccount extends BankAccount {
 	//****************************************************************** 
 	// Programmerare: Johan Bergström, johbef-4@student.ltu.se
-	// Datum: 2015-02-18
-	// Senast uppdaterad: 2015-02-18, Johan Bergström 
+	// Datum: 2015-02-27
+	// Senast uppdaterad: 2015-02-27, Johan Bergström 
 	// Beskrivning: Handle Credit Account class 
 	// Version: 1, First Release 
 	//****************************************************************** 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.2">
-  <zoom_level>4</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>80</x>
-      <y>212</y>
-      <w>156</w>
-      <h>116</h>
+      <x>147</x>
+      <y>371</y>
+      <w>273</w>
+      <h>203</h>
     </coordinates>
     <panel_attributes>BankAccount
 --
@@ -38,10 +38,10 @@ _#transactions: ArrayList&lt;String&gt;_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>192</x>
-      <y>324</y>
-      <w>12</w>
-      <h>36</h>
+      <x>343</x>
+      <y>567</y>
+      <w>21</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
@@ -49,10 +49,10 @@ _#transactions: ArrayList&lt;String&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>160</x>
-      <y>352</y>
-      <w>156</w>
-      <h>56</h>
+      <x>287</x>
+      <y>616</y>
+      <w>273</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>SavingsAccount
 --
@@ -72,10 +72,10 @@ _#transactions: ArrayList&lt;String&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>352</y>
-      <w>156</w>
-      <h>56</h>
+      <x>7</x>
+      <y>616</y>
+      <w>273</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>CreditAccount
 --
@@ -96,10 +96,10 @@ _#transactions: ArrayList&lt;String&gt;_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>112</x>
-      <y>324</y>
-      <w>12</w>
-      <h>36</h>
+      <x>203</x>
+      <y>567</y>
+      <w>21</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
@@ -107,10 +107,10 @@ _#transactions: ArrayList&lt;String&gt;_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>284</x>
-      <y>56</y>
-      <w>220</w>
-      <h>128</h>
+      <x>504</x>
+      <y>98</y>
+      <w>385</w>
+      <h>224</h>
     </coordinates>
     <panel_attributes>BankLogic
 --
@@ -141,10 +141,10 @@ _-startAccount: int = 1001_
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>284</x>
-      <y>212</y>
-      <w>220</w>
-      <h>104</h>
+      <x>504</x>
+      <y>371</y>
+      <w>385</w>
+      <h>182</h>
     </coordinates>
     <panel_attributes>Customer
 --
@@ -173,10 +173,10 @@ _-account: ArrayList&lt;BankAccount&gt;_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>156</x>
-      <y>120</y>
-      <w>136</w>
-      <h>100</h>
+      <x>280</x>
+      <y>210</y>
+      <w>238</w>
+      <h>175</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>320.0;10.0;10.0;10.0;10.0;230.0</additional_attributes>
@@ -184,10 +184,10 @@ _-account: ArrayList&lt;BankAccount&gt;_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>392</x>
-      <y>180</y>
-      <w>12</w>
-      <h>40</h>
+      <x>693</x>
+      <y>315</y>
+      <w>21</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
@@ -195,10 +195,10 @@ _-account: ArrayList&lt;BankAccount&gt;_
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>232</x>
-      <y>264</y>
-      <w>60</w>
-      <h>12</h>
+      <x>413</x>
+      <y>462</y>
+      <w>105</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>

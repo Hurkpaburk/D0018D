@@ -3,8 +3,8 @@ import java.util.*;
 public class BankLogic {
 	//****************************************************************** 
 	// Programmerare: Johan Bergström, johbef-4@student.ltu.se
-	// Datum: 2015-02-05
-	// Senast uppdaterad: 2015-02-05, Johan Bergström 
+	// Datum: 2015-02-27
+	// Senast uppdaterad: 2015-02-27, Johan Bergström 
 	// Beskrivning: Handle bank logic class
 	// Version: 1, First Release 
 	//****************************************************************** 
