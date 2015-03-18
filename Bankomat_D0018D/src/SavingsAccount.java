@@ -35,7 +35,9 @@ public class SavingsAccount extends BankAccount {
 	// Returvärde: Interest - balance with interest
 	//------------------------------------------------------
 	public double getInterest() {
-		return balance*(interestRate/100);
+		double interest;
+		interest = Math.round((balance*(interestRate/100))*100)/100d; // Update 1, Lab2
+		return interest;
 	}
 	
 	//------------------------------------------------------
@@ -48,15 +50,16 @@ public class SavingsAccount extends BankAccount {
 		double charge = 1.01;
 		if (numWithdraws >= 1) { // Number of withdraws is larger then one
 			if (balance-theTransaction*charge >= 0) { // Balance after transaction has to be larger then zero
-				balance = balance - theTransaction*charge;
+				balance = Math.round((balance - theTransaction*charge)*100)/100d; // Update 1, Lab2
+				
 				numWithdraws++;
-				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
+				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance); 
 				temp = true;
 			}
 		}
 		else {
 			if (balance-theTransaction >= 0) { // Balance after transaction has to be larger then zero
-				balance = balance - theTransaction;
+				balance = Math.round((balance - theTransaction)*100)/100d; // Update 1, Lab2
 				numWithdraws++;
 				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
 				System.out.println(balance);

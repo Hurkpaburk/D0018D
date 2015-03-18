@@ -102,6 +102,10 @@ public class BankMenu2
 		
 		removeCustomer(8505221898L);
 		printBank();
+		
+		System.out.println("\n## BTEST ##");
+		addCustomer("Karl Karlsson", 8505221898L, true);
+		addSavingsAccount(8505221898L);	// 1001
 	}
 	
 	/**

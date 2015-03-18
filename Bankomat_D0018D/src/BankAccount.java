@@ -58,7 +58,7 @@ public abstract class BankAccount {
 	// Returvärde: None
 	//------------------------------------------------------
 	public void deposit(double theTransaction) {
-		balance = balance + theTransaction;
+		balance = Math.round((balance + theTransaction)*100)/100d; // Update 1, Lab2
 		transactions.add(getTime() + ", Deposit: " + theTransaction + ", Balance: " + balance);
 	}
 	
@@ -87,7 +87,6 @@ public abstract class BankAccount {
 	//------------------------------------------------------
 	public String getTransactions() {
 
-		String accountInfo = new String();
 		StringBuilder info = new StringBuilder(toString()); // Stringbuilder to enable append of accounts
 		for(String i: transactions) { // loop over accounts
 			 info.append("\n" + i.toString()); 

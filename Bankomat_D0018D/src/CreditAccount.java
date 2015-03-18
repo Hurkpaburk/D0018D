@@ -34,13 +34,16 @@ public class CreditAccount extends BankAccount {
 	// Returvärde: Interest - balance with interest
 	//------------------------------------------------------
 	public double getInterest() {
+		double interest;
 		if (balance <= 0) {
-			System.out.println(balance*(debtInterest/100));
-			return balance*(debtInterest/100);	
+			interest = Math.round((balance*(debtInterest/100))*100)/100d; // Update 1, Lab2
+			//System.out.println(balance*(debtInterest/100));
+			return interest;	
 			
 		}
 		else {
-			return balance*(interestRate/100);
+			interest =  Math.round((balance*(interestRate/100))*100)/100d; // Update 1, Lab2
+			return interest;
 		}
 	}
 
@@ -51,7 +54,7 @@ public class CreditAccount extends BankAccount {
 	//------------------------------------------------------
 	public boolean withdraw(double theTransaction) {
 		if (balance-theTransaction >= -creditLimit) { // Balance after transaction has to be larger then zero
-			balance = balance - theTransaction;
+			balance = Math.round((balance - theTransaction)*100)/100d; // Update 1, Lab2
 			transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
 			return true;
 		}
