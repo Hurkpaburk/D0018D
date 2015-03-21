@@ -26,6 +26,17 @@ public class BankLogic {
 	// Public Methods
 
 	//------------------------------------------------------
+	// Beskrivning: ADDED FOR LAB 3: Get all Bank customers
+	// Inparametrar: None
+	// Returvärde: ArrayList with Customer Names 
+	//------------------------------------------------------	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Customer> getCustomers()
+	{
+		return (ArrayList<Customer>) customer.clone();
+	}
+	
+	//------------------------------------------------------
 	// Beskrivning: Get information about bank
 	// Inparametrar: None
 	// Returvärde: Customer Names 

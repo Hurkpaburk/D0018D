@@ -194,10 +194,10 @@ public class TestFile {
 		*/
 		
 		
-		 System.out.println("START OF BANK TEST!");
+	/*	 System.out.println("START OF BANK TEST!");
 		BankMenu2 bankTest = new BankMenu2();
 		bankTest.test();
 		 
-		
+		*/
 	}
 }
