@@ -6,98 +6,148 @@ import java.awt.event.*;
 public class GUI extends JFrame implements ActionListener {
 
 		private BankLogic bank;
-		private JList customers;
-		private JTextField name, pNr;
+		private JList customers, accounts;
+		private JTextField name, pNr, accountInfo;
 		
-		public static void main(String[] args)
-		{
+		JPanel leftPanel = new JPanel(new GridLayout(6,1));
+		JPanel rightPanel = new JPanel(new GridLayout(1,1));
+		
+		public static void main(String[] args) {
 			GUI frame = new GUI();
 			frame.setVisible(true);
 		}
 		
-		public GUI()
-		{
-			initiateInstanceVariables();
-			buildFrame();
+		public GUI() {
+			initMain();
+			buildMenu();
+			buildMainFrame();
+			
 		}
 		
-		private void initiateInstanceVariables()
-		{
+		private void initMain() {
 			bank = new BankLogic();
 
 			name = new JTextField();
 			name.setBorder(BorderFactory.createTitledBorder("Name"));
 			pNr = new JTextField();
 			pNr.setBorder(BorderFactory.createTitledBorder("Person Nummer"));
+			accountInfo = new JTextField();
+			accountInfo.setBorder(BorderFactory.createTitledBorder("Account Information"));
 			customers = new JList();
 			customers.setBorder(BorderFactory.createTitledBorder("Customer List"));
+			accounts = new JList();
+			accounts.setBorder(BorderFactory.createTitledBorder("Account List for Customer"));
 		}
 		
-		private void buildFrame()
-		{
+		private void buildMainFrame() {
 			setTitle("BANK");
 			setSize(300,250);
 			setLayout(new GridLayout(1,2));
 			
-			JPanel leftPanel = new JPanel(new GridLayout(5,1));
-			leftPanel.add(name);
-			leftPanel.add(pNr);
+			leftPanel.add(name,0);
+			leftPanel.add(pNr,1);
 			JButton newButton = new JButton("New Customer");
 			newButton.addActionListener(this);
-			leftPanel.add(newButton);
+			leftPanel.add(newButton,2);
 			JButton customerButton = new JButton("Show Customer");
 			customerButton.addActionListener(this);
-			leftPanel.add(customerButton);
+			leftPanel.add(customerButton,3);
+			JButton removeButton = new JButton("Remove Customer");
+			removeButton.addActionListener(this);
+			leftPanel.add(removeButton,4);
 			JButton clearButton = new JButton("Clear");
 			clearButton.addActionListener(this);
-			leftPanel.add(clearButton);
+			leftPanel.add(clearButton,5);
 			add(leftPanel);
 			
-			add(customers);
+			rightPanel.add(customers);
+			add(rightPanel);
 			
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
 		}
 		
-		public void actionPerformed(ActionEvent event)
-		{
+		private void buildMenu() {
+			JMenuBar menuBar = new JMenuBar();
+		    JMenu menu = new JMenu("File");
+		    menuBar.add(menu);
+			setJMenuBar(menuBar);
+		}
+		
+		private void buildCustomerFrame() {
+			
+			setLayout(new GridLayout(1,2));
+			
+			//JPanel leftPanel = new JPanel(new GridLayout(6,1));
+			leftPanel.removeAll();
+			leftPanel.add(name,0);
+			leftPanel.add(pNr,1);
+			JButton addAccButton = new JButton("Add Account");
+			addAccButton.addActionListener(this);
+			leftPanel.add(addAccButton,2);
+			JButton infoAccButton = new JButton("Info Account");
+			infoAccButton.addActionListener(this);
+			leftPanel.add(infoAccButton,3);
+			JButton remAccButton = new JButton("Remove Account");
+			remAccButton.addActionListener(this);
+			leftPanel.add(remAccButton,4);
+			JButton backButton = new JButton("Back to Bank");
+			backButton.addActionListener(this);
+			leftPanel.add(backButton,5);
+			add(leftPanel);
+			
+			//JPanel rightPanel = new JPanel(new GridLayout(2,1));
+			rightPanel.removeAll();
+			rightPanel.add(accounts,0);
+			rightPanel.add(accounts,1);
+			add(rightPanel);
+			
+			
+			setDefaultCloseOperation(EXIT_ON_CLOSE);
+		}
+		
+		public void actionPerformed(ActionEvent event) {
 			String buttonText = event.getActionCommand();
-			if(buttonText.equals("New Customer"))
-			{
-				add();
+			
+			if(buttonText.equals("New Customer")) {
+				addCustomer();
 			}
-			if(buttonText.equals("Show Customer"))
-			{
+			else if(buttonText.equals("Show Customer")) {
 				showSelected();
 			}
-			if(buttonText.equals("Clear"))
-			{
+			else if(buttonText.equals("Clear")) {
 				clear();
+			}
+			else if(buttonText.equalsIgnoreCase("Remove Customer")) {
+				removeCustomer();
 			}
 		}
 		
-		private void add()
-		{
+		private void addCustomer() {
 			bank.addCustomer(name.getText(), Long.parseLong(pNr.getText()));
 			customers.setListData(bank.getCustomers().toArray());
 			clear();
 		}
 		
-		private void showSelected()
-		{/*
-			int position = personList.getSelectedIndex();
-			if(position > -1)
-			{
-				nameField.setText(logic.getNameForPersonAt(position));
-				phoneNrField.setText(logic.getPhoneNrForPersonAt(position));
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(null, "Du må‚ste markera en person i listan!");
-			}*/
+		private void removeCustomer() {
+			bank.removeCustomer(Long.parseLong(pNr.getText()));
+			customers.setListData(bank.getCustomers().toArray());
 		}
 		
-		private void clear()
-		{
+		private void showSelected() {
+			int position = customers.getSelectedIndex();
+			if(position >= 0) {
+				buildCustomerFrame();
+				name.setText(bank.getCustomers().get(position).getCustomerName());
+				pNr.setText((Long.toString(bank.getCustomers().get(position).getCustomerPn())));
+					
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
+			}
+		}
+		
+		private void clear() {
 			name.setText("");
+			pNr.setText("");
 		}
 	}
