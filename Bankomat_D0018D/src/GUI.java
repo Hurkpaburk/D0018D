@@ -13,8 +13,8 @@ public class GUI extends JFrame implements ActionListener {
 		JPanel rightPanel = new JPanel(new GridLayout(1,1));
 		
 		public static void main(String[] args) {
-			GUI frame = new GUI();
-			frame.setVisible(true);
+			GUI bankFrame = new GUI();
+			bankFrame.setVisible(true);
 		}
 		
 		public GUI() {
@@ -30,13 +30,11 @@ public class GUI extends JFrame implements ActionListener {
 			name = new JTextField();
 			name.setBorder(BorderFactory.createTitledBorder("Name"));
 			pNr = new JTextField();
-			pNr.setBorder(BorderFactory.createTitledBorder("Person Nummer"));
+			pNr.setBorder(BorderFactory.createTitledBorder("PersonNummer"));
 			accountInfo = new JTextField();
 			accountInfo.setBorder(BorderFactory.createTitledBorder("Account Information"));
 			customers = new JList();
 			customers.setBorder(BorderFactory.createTitledBorder("Customer List"));
-			accounts = new JList();
-			accounts.setBorder(BorderFactory.createTitledBorder("Account List for Customer"));
 		}
 		
 		private void buildMainFrame() {
@@ -68,8 +66,26 @@ public class GUI extends JFrame implements ActionListener {
 		
 		private void buildMenu() {
 			JMenuBar menuBar = new JMenuBar();
-		    JMenu menu = new JMenu("File");
-		    menuBar.add(menu);
+		    JMenu fileMenu = new JMenu("File");
+		    menuBar.add(fileMenu);
+		    JMenuItem exit = new JMenuItem("Exit");
+		    exit.addActionListener(this);
+		    fileMenu.add(exit);
+		    
+		    JMenu customerMenu = new JMenu("Customer");
+		    menuBar.add(customerMenu);
+		    JMenuItem newCust = new JMenuItem("New Customer");
+		    newCust.addActionListener(this);
+		    customerMenu.add(newCust);
+		    JMenuItem showCust = new JMenuItem("Show Customer");
+		    showCust.addActionListener(this);
+		    customerMenu.add(showCust);
+		    JMenuItem remCust = new JMenuItem("Remove Customer");
+		    remCust.addActionListener(this);
+		    customerMenu.add(remCust);
+		    
+		    JMenu accountMenu = new JMenu("Account");
+		    menuBar.add(accountMenu);		    
 			setJMenuBar(menuBar);
 		}
 		
@@ -81,18 +97,7 @@ public class GUI extends JFrame implements ActionListener {
 			leftPanel.removeAll();
 			leftPanel.add(name,0);
 			leftPanel.add(pNr,1);
-			JButton addAccButton = new JButton("Add Account");
-			addAccButton.addActionListener(this);
-			leftPanel.add(addAccButton,2);
-			JButton infoAccButton = new JButton("Info Account");
-			infoAccButton.addActionListener(this);
-			leftPanel.add(infoAccButton,3);
-			JButton remAccButton = new JButton("Remove Account");
-			remAccButton.addActionListener(this);
-			leftPanel.add(remAccButton,4);
-			JButton backButton = new JButton("Back to Bank");
-			backButton.addActionListener(this);
-			leftPanel.add(backButton,5);
+			
 			add(leftPanel);
 			
 			//JPanel rightPanel = new JPanel(new GridLayout(2,1));
@@ -104,37 +109,58 @@ public class GUI extends JFrame implements ActionListener {
 			
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
 		}
-		
+
 		public void actionPerformed(ActionEvent event) {
-			String buttonText = event.getActionCommand();
-			
-			if(buttonText.equals("New Customer")) {
+
+			String text = event.getActionCommand();
+
+			if(text.equals("Exit")) {
+				setVisible(false); // Hide 
+				dispose(); //Destroy JFrame object
+				System.exit(0); 
+			}
+			else if(text.equals("New Customer")) {
 				addCustomer();
 			}
-			else if(buttonText.equals("Show Customer")) {
-				showSelected();
+			else if(text.equals("Show Customer")) {
+				showCustomer();
 			}
-			else if(buttonText.equals("Clear")) {
-				clear();
-			}
-			else if(buttonText.equalsIgnoreCase("Remove Customer")) {
+			else if(text.equals("Remove Customer")) {
 				removeCustomer();
 			}
 		}
 		
 		private void addCustomer() {
-			bank.addCustomer(name.getText(), Long.parseLong(pNr.getText()));
-			customers.setListData(bank.getCustomers().toArray());
-			clear();
+			
+			JPanel panel = new JPanel();
+			JTextField nameInput = new JTextField(20);
+			nameInput.setBorder(BorderFactory.createTitledBorder("Customer Name"));
+			panel.add(nameInput);
+			JTextField pNrInput = new JTextField(20);
+			pNrInput.setBorder(BorderFactory.createTitledBorder("Customer Personnummer"));
+			panel.add(pNrInput);
+
+			int value = JOptionPane.showConfirmDialog(null, panel, "New Customer", JOptionPane.OK_CANCEL_OPTION);
+			if (value == JOptionPane.OK_OPTION)
+			{
+				bank.addCustomer(nameInput.getText(), Long.parseLong(pNrInput.getText()));
+				customers.setListData(bank.getCustomers().toArray());
+			}
 		}
-		
+
 		private void removeCustomer() {
-			bank.removeCustomer(Long.parseLong(pNr.getText()));
-			customers.setListData(bank.getCustomers().toArray());
-		}
-		
-		private void showSelected() {
 			int position = customers.getSelectedIndex();
+			if(position >= 0) {
+				bank.removeCustomer(customers.getSelectedValue()toString());
+				customers.setListData(bank.getCustomers().toArray());
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
+			}
+		}
+
+			private void showCustomer() {
+				int position = customers.getSelectedIndex();
 			if(position >= 0) {
 				buildCustomerFrame();
 				name.setText(bank.getCustomers().get(position).getCustomerName());
@@ -144,10 +170,5 @@ public class GUI extends JFrame implements ActionListener {
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
 			}
-		}
-		
-		private void clear() {
-			name.setText("");
-			pNr.setText("");
 		}
 	}
