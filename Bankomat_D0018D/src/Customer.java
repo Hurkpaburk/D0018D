@@ -33,6 +33,18 @@ public class Customer {
 	// Public Methods
 	
 	//------------------------------------------------------
+	// Beskrivning: ADDED FOR LAB 3: Get all Customer Accounts
+	// Inparametrar: None
+	// Returv√§rde: ArrayList with Accounts 
+	//------------------------------------------------------	
+	@SuppressWarnings("unchecked")
+	public ArrayList<BankAccount> getAccounts()
+	{
+		return (ArrayList<BankAccount>) account.clone();
+	}
+	
+	
+	//------------------------------------------------------
 	// Beskrivning: Add account 
 	// Inparametrar: theAccountNumber - New account number, theAccountType - Account Type, theTransaction - Initial deposit
 	// Returv‰rde: theAccountNumber - Account Number, -1 if not created

@@ -107,7 +107,7 @@ public class BankLogic {
 	public String removeCustomer(long pNr) {
 		Customer thePerson = existCustomerPn(pNr);
 		if(thePerson != null) { // Check if customer exists
-			String customerName = new String(thePerson.getCustomerName() +"\n");
+			String customerName = new String(thePerson.getCustomerName() + ", " + pNr + "\n");
 			StringBuilder removedCustomer = new StringBuilder(customerName); // stringbuilder to append customer information
 			for (int i = startAccount; i<nextAccount; i++) { // go over all created bank account numbers
 				BankAccount theAccount = thePerson.getAccount(i); 
