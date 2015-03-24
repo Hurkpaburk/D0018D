@@ -122,13 +122,12 @@ public class GUI extends JFrame implements ActionListener {
 			else if(text.equals("Remove Customer")) {
 				removeCustomer();
 			}
-			else if(text.equals("Remove Customer")) {
+			else if(text.equals("New Account")) {
 				addAccount();
 			}
 		}
 		
 		private void addCustomer() {
-			
 			JPanel panel = new JPanel();
 			JTextField nameInput = new JTextField(20);
 			nameInput.setBorder(BorderFactory.createTitledBorder("Customer Name"));
@@ -168,21 +167,28 @@ public class GUI extends JFrame implements ActionListener {
 		}
 		
 		private void addAccount() {
+			String savAcc = "Saving Account";
+			String creAcc = "Credit Account";
 			int position = customers.getSelectedIndex();
 			if(position >= 0) {
-				Object[] accounts = {"Deposit Account", "Credit Account"};
+				Object[] accountList = {savAcc, creAcc};
 				String accType = (String)JOptionPane.showInputDialog(null, "Which account shall be created?",
-						"Account Creation",JOptionPane.PLAIN_MESSAGE,null,accounts,"Deposit Account");
+						"Account Creation",JOptionPane.PLAIN_MESSAGE,null,accountList,savAcc);
 
-				
-				/*if(accType != null) {
-				{
-					bank.(nameInput.getText(), Long.parseLong(pNrInput.getText()));
-					customers.setListData(bank.getCustomers().toArray());
-				}*/
+				if(accType != null && accType == savAcc) {
+					bank.addSavingsAccount(bank.getCustomers().get(position).getCustomerPn());
 				}
+				else if(accType != null && accType == creAcc) {
+					bank.addCreditAccount(bank.getCustomers().get(position).getCustomerPn());
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Something went wrong creting account");
+				}
+				accounts.setListData(bank.getCustomers().get(position).getAccounts().toArray());
+			}
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
 			}
+
 		}
 	}
