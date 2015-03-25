@@ -125,6 +125,13 @@ public class GUI extends JFrame implements ActionListener {
 			else if(text.equals("New Account")) {
 				addAccount();
 			}
+			else if(text.equals("Show Account")) {
+				showAccount();
+			}
+			else if(text.equals("Remove Account")) {
+				remAccount();
+			}
+			
 		}
 		
 		private void addCustomer() {
@@ -155,7 +162,7 @@ public class GUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
 			}
 		}
-
+		// TODO: Not Done
 		private void showCustomer() {
 			int position = customers.getSelectedIndex();
 			if(position >= 0) {
@@ -189,6 +196,29 @@ public class GUI extends JFrame implements ActionListener {
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
 			}
-
+		}
+		// TODO: Not Done
+		private void showAccount() {
+			
+		}
+		
+		private void remAccount() {
+			int accPost = accounts.getSelectedIndex();
+			int cusPost = customers.getSelectedIndex();
+			if(accPost >= 0 && cusPost >= 0) {
+				String accInfo = bank.getCustomers().get(cusPost).getAccounts().get(accPost).toString();
+				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
+				String closedAcc = bank.closeAccount(bank.getCustomers().get(cusPost).getCustomerPn(),accNum);
+				accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
+				if(closedAcc == null) {
+					JOptionPane.showMessageDialog(null, "No Account Closed");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Closed Account:\n" + accInfo);
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");
+			}
 		}
 	}
