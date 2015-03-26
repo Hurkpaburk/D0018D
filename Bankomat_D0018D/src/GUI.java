@@ -31,7 +31,7 @@ public class GUI extends JFrame implements ActionListener {
 			
 			buttonCustInfo = new JButton("Show Customer");
 			buttonCustInfo.addActionListener(this);
-			buttonAccInfo = new JButton("Show Account");
+			buttonAccInfo = new JButton("Show Account History");
 		    buttonAccInfo.addActionListener(this);
 		    buttonWithdraw = new JButton("Withdraw");
 			buttonWithdraw.addActionListener(this);
@@ -121,7 +121,7 @@ public class GUI extends JFrame implements ActionListener {
 			else if(text.equals("New Account")) {
 				addAccount();
 			}
-			else if(text.equals("Show Account")) {
+			else if(text.equals("Show Account History")) {
 				showAccount();
 			}
 			else if(text.equals("Remove Account")) {
@@ -131,7 +131,7 @@ public class GUI extends JFrame implements ActionListener {
 				withdrawAccount();
 			}
 			else if(text.equals("Deposit")) {
-				depositAccount();
+				//depositAccount();
 			}
 		}
 		
@@ -147,8 +147,8 @@ public class GUI extends JFrame implements ActionListener {
 			if (value == JOptionPane.OK_OPTION)
 			{
 				bank.addCustomer(nameInput.getText(), Long.parseLong(pNrInput.getText()));
-				System.out.println(bank.getCustomers().get().);
-				customers.setListData(bank.getCustomers().toArray());
+				System.out.println(bank.getCustomersName().toString());
+				customers.setListData(bank.getCustomersName().toArray());
 			}
 		}
 
@@ -156,7 +156,7 @@ public class GUI extends JFrame implements ActionListener {
 			int position = customers.getSelectedIndex();
 			if(position >= 0) {
 				String remCustomer = bank.removeCustomer((bank.getCustomers().get(position).getCustomerPn()));
-				customers.setListData(bank.getCustomers().toArray());
+				customers.setListData(bank.getCustomersName().toArray());
 				JOptionPane.showMessageDialog(null, "Following Customer is removed from Bank:\n" + remCustomer);
 			}
 			else {
@@ -204,7 +204,7 @@ public class GUI extends JFrame implements ActionListener {
 			int cusPost = customers.getSelectedIndex();
 			if(accPost >= 0 && cusPost >= 0) {
 				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
-				String info = bank.infoAccount(bank.getCustomers().get(cusPost).getCustomerPn(),accNum);
+				String info = bank.infoTransactions(bank.getCustomers().get(cusPost).getCustomerPn(),accNum);
 				infoAcc.setText(info);
 			}
 			else {
@@ -236,16 +236,34 @@ public class GUI extends JFrame implements ActionListener {
 			int accPost = accounts.getSelectedIndex();
 			int cusPost = customers.getSelectedIndex();
 			if(accPost >= 0 && cusPost >= 0) {
-				String accInfo = bank.getCustomers().get(cusPost).getAccounts().get(accPost).toString();
 				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
-				String closedAcc = bank.closeAccount(bank.getCustomers().get(cusPost).getCustomerPn(),accNum);
+				Long pNr = bank.getCustomers().get(cusPost).getCustomerPn();
+				
+				String amount = JOptionPane.showInputDialog(null, "Amount to withdraw","0");
+				
+				bank.withdraw(pNr, accNum, Long.parseLong(amount));
 				accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
-				if(closedAcc == null) {
-					JOptionPane.showMessageDialog(null, "No Account Closed");
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "Closed Account:\n" + accInfo);
-				}
+				String info = bank.infoTransactions(pNr,accNum);
+				infoAcc.setText(info);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");
+			}
+		}
+		
+		private void depositAccount() {
+			int accPost = accounts.getSelectedIndex();
+			int cusPost = customers.getSelectedIndex();
+			if(accPost >= 0 && cusPost >= 0) {
+				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
+				Long pNr = bank.getCustomers().get(cusPost).getCustomerPn();
+				
+				String amount = JOptionPane.showInputDialog(null, "Amount to deposit","0");
+				
+				bank.deposit(pNr, accNum, Long.parseLong(amount));
+				accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
+				String info = bank.infoTransactions(pNr,accNum);
+				infoAcc.setText(info);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");

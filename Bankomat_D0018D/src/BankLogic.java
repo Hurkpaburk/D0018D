@@ -11,6 +11,7 @@ public class BankLogic {
 
 	// Instance Variables
 	private ArrayList<Customer> customer; // Bank customer list
+	private ArrayList<String> customerNames; // Banks customer names
 	private ArrayList<BankAccount> accountList; // Bank account list. Accounts will not be removed from this list if they are closed. 
 	private static final int startAccount =  1001;
 	private static int nextAccount;
@@ -30,9 +31,21 @@ public class BankLogic {
 	// Inparametrar: None
 	// Returvärde: ArrayList with Customer Names 
 	//------------------------------------------------------	
+	public ArrayList<String> getCustomersName() {
+		customerNames = new ArrayList<String>();
+		for(Customer i: customer) { // loop over list
+		customerNames.add(i.getCustomerName());	
+		}
+		return customerNames;
+	}
+	
+	//------------------------------------------------------
+	// Beskrivning: ADDED FOR LAB 3: Get all Bank customers
+	// Inparametrar: None
+	// Returvärde: ArrayList with Customer objects 
+	//------------------------------------------------------	
 	@SuppressWarnings("unchecked")
-	public ArrayList<Customer> getCustomers()
-	{
+	public ArrayList<Customer> getCustomers() {
 		return (ArrayList<Customer>) customer.clone();
 	}
 	
