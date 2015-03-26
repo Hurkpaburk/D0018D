@@ -7,9 +7,9 @@ public class GUI extends JFrame implements ActionListener {
 
 		private BankLogic bank;
 		private JList customers, accounts;
-//		private JTextField name, pNr, accountInfo;
+		private JButton buttonCustInfo, buttonAccInfo, buttonWithdraw, buttonDeposit;
 		private JTextArea infoCust, infoAcc;
-		private JPanel leftPanel, rightPanel;
+		private JPanel leftPanel, rightPanel, rightButtonPanel;
 		
 		public static void main(String[] args) {
 			GUI bankFrame = new GUI();
@@ -19,17 +19,30 @@ public class GUI extends JFrame implements ActionListener {
 		public GUI() {
 			initMain();
 			buildMenu();
-			buildMainFrame();
-			
+			buildMainFrame();		
 		}
 		
 		private void initMain() {
 			bank = new BankLogic();
 
-			leftPanel = new JPanel(new GridLayout(2,1));
-			rightPanel = new JPanel(new GridLayout(2,1));
+			leftPanel = new JPanel(new GridLayout(3,1));
+			rightPanel = new JPanel(new GridLayout(3,1));
+			rightButtonPanel = new JPanel(new GridLayout(1,3));
+			
+			buttonCustInfo = new JButton("Show Customer");
+			buttonCustInfo.addActionListener(this);
+			buttonAccInfo = new JButton("Show Account");
+		    buttonAccInfo.addActionListener(this);
+		    buttonWithdraw = new JButton("Withdraw");
+			buttonWithdraw.addActionListener(this);
+			buttonDeposit = new JButton("Deposit");
+			buttonDeposit.addActionListener(this);
+			
 			infoCust = new JTextArea();
+			infoCust.setBorder(BorderFactory.createTitledBorder("Customer Information"));
 			infoAcc = new JTextArea();
+			infoAcc.setBorder(BorderFactory.createTitledBorder("Account Information"));
+			
 			accounts = new JList();
 			accounts.setBorder(BorderFactory.createTitledBorder("Customer Account List"));
 			customers = new JList();
@@ -42,11 +55,17 @@ public class GUI extends JFrame implements ActionListener {
 			setLayout(new GridLayout(1,2));
 			
 			leftPanel.add(customers,0);
-			leftPanel.add(infoCust, 1);
+			leftPanel.add(buttonCustInfo,1);
+			leftPanel.add(infoCust, 2);
 			add(leftPanel);
 			
+			rightButtonPanel.add(buttonAccInfo,0);
+			rightButtonPanel.add(buttonDeposit,1);
+			rightButtonPanel.add(buttonWithdraw,2);
+			
 			rightPanel.add(accounts,0);
-			rightPanel.add(infoAcc, 1);
+			rightPanel.add(rightButtonPanel,1);
+			rightPanel.add(infoAcc, 2);
 			add(rightPanel);
 			
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -65,9 +84,6 @@ public class GUI extends JFrame implements ActionListener {
 		    JMenuItem newCust = new JMenuItem("New Customer");
 		    newCust.addActionListener(this);
 		    customerMenu.add(newCust);
-		    JMenuItem showCust = new JMenuItem("Show Customer");
-		    showCust.addActionListener(this);
-		    customerMenu.add(showCust);
 		    JMenuItem remCust = new JMenuItem("Remove Customer");
 		    remCust.addActionListener(this);
 		    customerMenu.add(remCust);
@@ -77,36 +93,11 @@ public class GUI extends JFrame implements ActionListener {
 		    JMenuItem newAcc = new JMenuItem("New Account");
 		    newAcc.addActionListener(this);
 		    accountMenu.add(newAcc);
-		    JMenuItem showAcc = new JMenuItem("Show Account");
-		    showAcc.addActionListener(this);
-		    accountMenu.add(showAcc);
 		    JMenuItem remAcc = new JMenuItem("Remove Account");
 		    remAcc.addActionListener(this);
 		    accountMenu.add(remAcc);
 		    
 			setJMenuBar(menuBar);
-		}
-		
-		private void buildCustomerFrame() {
-			
-			setLayout(new GridLayout(1,2));
-		/*	
-			//JPanel leftPanel = new JPanel(new GridLayout(6,1));
-			leftPanel.removeAll();
-			leftPanel.add(name,0);
-			leftPanel.add(pNr,1);
-			
-			add(leftPanel);
-			
-			//JPanel rightPanel = new JPanel(new GridLayout(2,1));
-			rightPanel.removeAll();
-			rightPanel.add(accounts,0);
-			rightPanel.add(accounts,1);
-			add(rightPanel);
-			
-			
-			setDefaultCloseOperation(EXIT_ON_CLOSE);
-			*/
 		}
 
 		public void actionPerformed(ActionEvent event) {
@@ -136,7 +127,12 @@ public class GUI extends JFrame implements ActionListener {
 			else if(text.equals("Remove Account")) {
 				remAccount();
 			}
-			
+			else if(text.equals("Withdraw")) {
+				withdrawAccount();
+			}
+			else if(text.equals("Deposit")) {
+				depositAccount();
+			}
 		}
 		
 		private void addCustomer() {
@@ -151,6 +147,7 @@ public class GUI extends JFrame implements ActionListener {
 			if (value == JOptionPane.OK_OPTION)
 			{
 				bank.addCustomer(nameInput.getText(), Long.parseLong(pNrInput.getText()));
+				System.out.println(bank.getCustomers().get().);
 				customers.setListData(bank.getCustomers().toArray());
 			}
 		}
@@ -216,6 +213,26 @@ public class GUI extends JFrame implements ActionListener {
 		}
 		
 		private void remAccount() {
+			int accPost = accounts.getSelectedIndex();
+			int cusPost = customers.getSelectedIndex();
+			if(accPost >= 0 && cusPost >= 0) {
+				String accInfo = bank.getCustomers().get(cusPost).getAccounts().get(accPost).toString();
+				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
+				String closedAcc = bank.closeAccount(bank.getCustomers().get(cusPost).getCustomerPn(),accNum);
+				accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
+				if(closedAcc == null) {
+					JOptionPane.showMessageDialog(null, "No Account Closed");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Closed Account:\n" + accInfo);
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");
+			}
+		}
+		
+		private void withdrawAccount() {
 			int accPost = accounts.getSelectedIndex();
 			int cusPost = customers.getSelectedIndex();
 			if(accPost >= 0 && cusPost >= 0) {
