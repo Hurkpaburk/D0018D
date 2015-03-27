@@ -4,24 +4,52 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GUI extends JFrame implements ActionListener {
-
+	//****************************************************************** 
+		// Programmerare: Johan Bergstr�m, johbef-4@student.ltu.se
+		// Datum: 2015-03-27
+		// Senast uppdaterad: 2015-03-27, Johan Bergström 
+		// Beskrivning: Handle Account information class 
+		// Version: 1, First Release 
+		//****************************************************************** 
+	
+		// Instance Variables
 		private BankLogic bank;
 		private JList customers, accounts;
 		private JButton buttonCustInfo, buttonAccInfo, buttonWithdraw, buttonDeposit;
 		private JTextArea infoCust, infoAcc;
 		private JPanel leftPanel, rightPanel, rightButtonPanel;
 		
+		// Public Methods
+		
+		//------------------------------------------------------
+		// Beskrivning: main
+		// Inparametrar: String[]
+		// Returvärde: None
+		//------------------------------------------------------
 		public static void main(String[] args) {
 			GUI bankFrame = new GUI();
 			bankFrame.setVisible(true);
 		}
 		
+		
+		//------------------------------------------------------
+		// Beskrivning: function to create gui
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		public GUI() {
 			initMain();
 			buildMenu();
 			buildMainFrame();		
 		}
 		
+		// Private Methods
+		
+		//------------------------------------------------------
+		// Beskrivning: construct new bank, panels, button etc.
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		private void initMain() {
 			bank = new BankLogic();
 
@@ -49,6 +77,11 @@ public class GUI extends JFrame implements ActionListener {
 			customers.setBorder(BorderFactory.createTitledBorder("Customer List"));
 		}
 		
+		//------------------------------------------------------
+		// Beskrivning: Build main frame gui for ban
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		private void buildMainFrame() {
 			setTitle("BANK");
 			setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -71,6 +104,11 @@ public class GUI extends JFrame implements ActionListener {
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
 		}
 		
+		//------------------------------------------------------
+		// Beskrivning: Build JMenu for bank to be added in to main gui
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		private void buildMenu() {
 			JMenuBar menuBar = new JMenuBar();
 		    JMenu fileMenu = new JMenu("File");
@@ -100,13 +138,18 @@ public class GUI extends JFrame implements ActionListener {
 			setJMenuBar(menuBar);
 		}
 
+		//------------------------------------------------------
+		// Beskrivning: action performed, perform action based on text compare
+		// Inparametrar: Action event
+		// Returvärde: None
+		//------------------------------------------------------
 		public void actionPerformed(ActionEvent event) {
 
 			String text = event.getActionCommand();
 
 			if(text.equals("Exit")) {
-				setVisible(false); // Hide 
-				dispose(); //Destroy JFrame object
+				setVisible(false); 
+				dispose();
 				System.exit(0); 
 			}
 			else if(text.equals("New Customer")) {
@@ -131,7 +174,7 @@ public class GUI extends JFrame implements ActionListener {
 				withdrawAccount();
 			}
 			else if(text.equals("Deposit")) {
-				//depositAccount();
+				depositAccount();
 			}
 		}
 		
@@ -147,7 +190,6 @@ public class GUI extends JFrame implements ActionListener {
 			if (value == JOptionPane.OK_OPTION)
 			{
 				bank.addCustomer(nameInput.getText(), Long.parseLong(pNrInput.getText()));
-				System.out.println(bank.getCustomersName().toString());
 				customers.setListData(bank.getCustomersName().toArray());
 			}
 		}
@@ -167,7 +209,10 @@ public class GUI extends JFrame implements ActionListener {
 		private void showCustomer() {
 			int position = customers.getSelectedIndex();
 			if(position >= 0) {
+				infoCust.setText(null);
 				infoCust.setText(bank.getCustomers().get(position).toString());
+				accounts.setListData(bank.getCustomers().get(position).getAccounts().toArray());
+				infoAcc.setText(null);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
@@ -241,11 +286,17 @@ public class GUI extends JFrame implements ActionListener {
 				
 				String amount = JOptionPane.showInputDialog(null, "Amount to withdraw","0");
 				
-				bank.withdraw(pNr, accNum, Long.parseLong(amount));
-				accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
-				String info = bank.infoTransactions(pNr,accNum);
-				infoAcc.setText(info);
-			}
+				boolean withdrawOk = bank.withdraw(pNr, accNum, Long.parseLong(amount));
+				if(withdrawOk) {
+					accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
+					String info = bank.infoTransactions(pNr,accNum);
+					infoAcc.setText(null);
+					infoAcc.setText(info);	
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Now able to withdraw:\n" + amount);
+				}
+				}
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");
 			}
@@ -257,13 +308,19 @@ public class GUI extends JFrame implements ActionListener {
 			if(accPost >= 0 && cusPost >= 0) {
 				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
 				Long pNr = bank.getCustomers().get(cusPost).getCustomerPn();
-				
+
 				String amount = JOptionPane.showInputDialog(null, "Amount to deposit","0");
-				
-				bank.deposit(pNr, accNum, Long.parseLong(amount));
-				accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
-				String info = bank.infoTransactions(pNr,accNum);
-				infoAcc.setText(info);
+
+				boolean depositOk = bank.deposit(pNr, accNum, Long.parseLong(amount));
+				if(depositOk) {
+					accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
+					String info = bank.infoTransactions(pNr,accNum);
+					infoAcc.setText(null);
+					infoAcc.setText(info);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Now able to deposit:\n" + amount);
+				}
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");

@@ -4,9 +4,10 @@ public class BankLogic {
 	//****************************************************************** 
 	// Programmerare: Johan Bergström, johbef-4@student.ltu.se
 	// Datum: 2015-02-27
-	// Senast uppdaterad: 2015-02-27, Johan Bergström 
+	// Senast uppdaterad: 2015-03-27, Johan Bergström 
 	// Beskrivning: Handle bank logic class
-	// Version: 1, First Release 
+	// Version: 1, First Release:
+	//			2, Updates to fit bank gui
 	//****************************************************************** 
 
 	// Instance Variables
@@ -59,7 +60,6 @@ public class BankLogic {
 		for(Customer i: customer) { // loop over customers
 			info.append("\n" + i.getCustomerName() + ";"); 
 		}
-		System.out.println(info.toString());
 		return info.toString();
 	}
 
