@@ -37,7 +37,6 @@ public class CreditAccount extends BankAccount {
 		double interest;
 		if (balance <= 0) {
 			interest = Math.round((balance*(debtInterest/100))*100)/100d; // Update 1, Lab2
-			//System.out.println(balance*(debtInterest/100));
 			return interest;	
 			
 		}

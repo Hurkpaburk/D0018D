@@ -147,7 +147,7 @@ public class GUI extends JFrame implements ActionListener {
 
 			String text = event.getActionCommand();
 
-			if(text.equals("Exit")) {
+			if(text.equals("Exit")) { // Exit program
 				setVisible(false); 
 				dispose();
 				System.exit(0); 
@@ -177,8 +177,14 @@ public class GUI extends JFrame implements ActionListener {
 				depositAccount();
 			}
 		}
-		
+
+		//------------------------------------------------------
+		// Beskrivning: Add customer to bank and update gui
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		private void addCustomer() {
+			// Create new panel to use in dialog
 			JPanel panel = new JPanel();
 			JTextField nameInput = new JTextField(20);
 			nameInput.setBorder(BorderFactory.createTitledBorder("Customer Name"));
@@ -186,6 +192,8 @@ public class GUI extends JFrame implements ActionListener {
 			JTextField pNrInput = new JTextField(20);
 			pNrInput.setBorder(BorderFactory.createTitledBorder("Customer Personnummer"));
 			panel.add(pNrInput);
+			
+			// Dialog to input customer information
 			int value = JOptionPane.showConfirmDialog(null, panel, "New Customer", JOptionPane.OK_CANCEL_OPTION);
 			if (value == JOptionPane.OK_OPTION)
 			{
@@ -194,9 +202,14 @@ public class GUI extends JFrame implements ActionListener {
 			}
 		}
 
+		//------------------------------------------------------
+		// Beskrivning: Remove customer to bank and update gui
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		private void removeCustomer() {
 			int position = customers.getSelectedIndex();
-			if(position >= 0) {
+			if(position >= 0) { // Customer selected in JList
 				String remCustomer = bank.removeCustomer((bank.getCustomers().get(position).getCustomerPn()));
 				customers.setListData(bank.getCustomersName().toArray());
 				JOptionPane.showMessageDialog(null, "Following Customer is removed from Bank:\n" + remCustomer);
@@ -206,9 +219,14 @@ public class GUI extends JFrame implements ActionListener {
 			}
 		}
 
+		//------------------------------------------------------
+		// Beskrivning: Show customer information in gui
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		private void showCustomer() {
 			int position = customers.getSelectedIndex();
-			if(position >= 0) {
+			if(position >= 0) { // Customer selected in JList
 				infoCust.setText(null);
 				infoCust.setText(bank.getCustomers().get(position).toString());
 				accounts.setListData(bank.getCustomers().get(position).getAccounts().toArray());
@@ -219,19 +237,26 @@ public class GUI extends JFrame implements ActionListener {
 			}
 		}
 		
+		//------------------------------------------------------
+		// Beskrivning: Add Account to bank and update gui
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		private void addAccount() {
 			String savAcc = "Saving Account";
 			String creAcc = "Credit Account";
 			int position = customers.getSelectedIndex();
-			if(position >= 0) {
+			if(position >= 0) { // Customer selected in JList
+				
+				// Create dialogbox to select account type
 				Object[] accountList = {savAcc, creAcc};
 				String accType = (String)JOptionPane.showInputDialog(null, "Which account shall be created?",
 						"Account Creation",JOptionPane.PLAIN_MESSAGE,null,accountList,savAcc);
 
-				if(accType != null && accType == savAcc) {
+				if(accType != null && accType == savAcc) { // Saving account 
 					bank.addSavingsAccount(bank.getCustomers().get(position).getCustomerPn());
 				}
-				else if(accType != null && accType == creAcc) {
+				else if(accType != null && accType == creAcc) { // Credit account
 					bank.addCreditAccount(bank.getCustomers().get(position).getCustomerPn());
 				}
 				else {
@@ -244,10 +269,15 @@ public class GUI extends JFrame implements ActionListener {
 			}
 		}
 		
+		//------------------------------------------------------
+		// Beskrivning: Show account information in gui
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		private void showAccount() {
 			int accPost = accounts.getSelectedIndex();
 			int cusPost = customers.getSelectedIndex();
-			if(accPost >= 0 && cusPost >= 0) {
+			if(accPost >= 0 && cusPost >= 0) { // Customer and account selected in JList
 				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
 				String info = bank.infoTransactions(bank.getCustomers().get(cusPost).getCustomerPn(),accNum);
 				infoAcc.setText(info);
@@ -257,44 +287,53 @@ public class GUI extends JFrame implements ActionListener {
 			}	
 		}
 		
+		//------------------------------------------------------
+		// Beskrivning: remove account from bank and update gui
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		private void remAccount() {
 			int accPost = accounts.getSelectedIndex();
 			int cusPost = customers.getSelectedIndex();
-			if(accPost >= 0 && cusPost >= 0) {
-				String accInfo = bank.getCustomers().get(cusPost).getAccounts().get(accPost).toString();
+			if(accPost >= 0 && cusPost >= 0) { // Customer and account selected in JList
+				//String accInfo = bank.getCustomers().get(cusPost).getAccounts().get(accPost).toString();
 				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
 				String closedAcc = bank.closeAccount(bank.getCustomers().get(cusPost).getCustomerPn(),accNum);
 				accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
-				if(closedAcc == null) {
+				if(closedAcc == null) { // account does not exist in bank
 					JOptionPane.showMessageDialog(null, "No Account Closed");
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "Closed Account:\n" + accInfo);
+					JOptionPane.showMessageDialog(null, "Closed Account:\n" + closedAcc);
 				}
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");
 			}
 		}
-		
+
+		//------------------------------------------------------
+		// Beskrivning: Withdraw from account and update gui
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
 		private void withdrawAccount() {
 			int accPost = accounts.getSelectedIndex();
 			int cusPost = customers.getSelectedIndex();
-			if(accPost >= 0 && cusPost >= 0) {
+			if(accPost >= 0 && cusPost >= 0) { // Customer and account selected in JList
 				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
 				Long pNr = bank.getCustomers().get(cusPost).getCustomerPn();
-				
+				// Dialog to input how much to withdraw
 				String amount = JOptionPane.showInputDialog(null, "Amount to withdraw","0");
-				
 				boolean withdrawOk = bank.withdraw(pNr, accNum, Long.parseLong(amount));
-				if(withdrawOk) {
+				if(withdrawOk) { // Amount is withdrawn from bank and gui updated
 					accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
 					String info = bank.infoTransactions(pNr,accNum);
 					infoAcc.setText(null);
 					infoAcc.setText(info);	
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "Now able to withdraw:\n" + amount);
+					JOptionPane.showMessageDialog(null, "Not able to withdraw:\n" + amount);
 				}
 				}
 			else {
@@ -302,17 +341,21 @@ public class GUI extends JFrame implements ActionListener {
 			}
 		}
 		
+		//------------------------------------------------------
+		// Beskrivning: Deposit to account and update gui
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------		
 		private void depositAccount() {
 			int accPost = accounts.getSelectedIndex();
 			int cusPost = customers.getSelectedIndex();
-			if(accPost >= 0 && cusPost >= 0) {
+			if(accPost >= 0 && cusPost >= 0) { // Customer and account selected in JList
 				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
 				Long pNr = bank.getCustomers().get(cusPost).getCustomerPn();
-
+				// dialog to input how much to deposit
 				String amount = JOptionPane.showInputDialog(null, "Amount to deposit","0");
-
 				boolean depositOk = bank.deposit(pNr, accNum, Long.parseLong(amount));
-				if(depositOk) {
+				if(depositOk) {// Amount is deposit from bank and gui updated
 					accounts.setListData(bank.getCustomers().get(cusPost).getAccounts().toArray());
 					String info = bank.infoTransactions(pNr,accNum);
 					infoAcc.setText(null);
