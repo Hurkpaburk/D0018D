@@ -1,5 +1,5 @@
 import javax.swing.*;
-
+import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -135,6 +135,15 @@ public class GUI extends JFrame implements ActionListener {
 		    remAcc.addActionListener(this);
 		    accountMenu.add(remAcc);
 		    
+		    JMenu importExportMenu = new JMenu("Import Export");
+		    menuBar.add(importExportMenu);
+		    JMenuItem exportCust = new JMenuItem("Export Customers");
+		    exportCust.addActionListener(this);
+		    importExportMenu.add(exportCust);
+		    JMenuItem importCust = new JMenuItem("Import Customers");
+		    importCust.addActionListener(this);
+		    importExportMenu.add(importCust);
+		    
 			setJMenuBar(menuBar);
 		}
 
@@ -175,6 +184,9 @@ public class GUI extends JFrame implements ActionListener {
 			}
 			else if(text.equals("Deposit")) {
 				depositAccount();
+			}
+			else if(text.equals("Export Customers")) {
+				exportCust();
 			}
 		}
 
@@ -368,5 +380,31 @@ public class GUI extends JFrame implements ActionListener {
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");
 			}
+		}
+		
+		//------------------------------------------------------
+		// Beskrivning: Export Customers and the customer information to txt file
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------		
+		private void exportCust() {
+						
+			try
+			{
+				String fileName = JOptionPane.showInputDialog(null, "Save to file:","Customers.txt");
+
+				PrintWriter out = new PrintWriter(new FileWriter(fileName));
+
+				for(int i = 0; i < bank.getCustomers().size(); i++)
+				{
+					bank.getCustomers().get(i).toString();
+				}
+				out.close();
+			}
+			catch(IOException e)
+			{
+				JOptionPane.showMessageDialog(null, "Could not save data to file: " + fileName);
+			}
+				
 		}
 	}

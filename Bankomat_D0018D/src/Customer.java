@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 public class Customer {
@@ -150,7 +151,37 @@ public class Customer {
 	public void setCustomerName(String name){
 		this.name = name;
 	}
-
+	
+	//------------------------------------------------------
+	// Beskrivning: Export Customer to textfile
+	// Inparametrar: out - text output stream
+	// Returvärde: None
+	//------------------------------------------------------	
+	public void save(PrintWriter out)
+	{
+		out.println(this.firstName);
+		out.println(this.lastName);
+		out.println(this.phoneNumber);
+	}
+	
+	//------------------------------------------------------
+	// Beskrivning: Import Customer from textfile
+	// Inparametrar: in - input stream
+	// Returvärde: None
+	//------------------------------------------------------	
+	public void read(BufferedReader in) 
+	{
+		try
+		{
+			this.firstName = in.readLine();
+			this.lastName = in.readLine();
+			this.phoneNumber = in.readLine();
+		}
+		catch(IOException e)
+		{
+			System.out.println("Det gick inte läsa från filen");
+		}
+	}
 
 	// Private Methods
 
