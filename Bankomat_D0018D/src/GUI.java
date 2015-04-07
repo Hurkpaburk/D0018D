@@ -381,30 +381,46 @@ public class GUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");
 			}
 		}
-		
+
 		//------------------------------------------------------
 		// Beskrivning: Export Customers and the customer information to txt file
 		// Inparametrar: None
 		// Returvärde: None
 		//------------------------------------------------------		
 		private void exportCust() {
-						
-			try
-			{
-				String fileName = JOptionPane.showInputDialog(null, "Save to file:","Customers.txt");
-
+			String fileName = JOptionPane.showInputDialog(null, "Save to file:","Customers.txt");		
+			try {
 				PrintWriter out = new PrintWriter(new FileWriter(fileName));
 
-				for(int i = 0; i < bank.getCustomers().size(); i++)
-				{
-					bank.getCustomers().get(i).toString();
+				for(int i = 0; i < bank.getCustomers().size(); i++) {
+					bank.getCustomers().get(i).save(out);
 				}
 				out.close();
 			}
-			catch(IOException e)
-			{
+			catch(IOException e) {
 				JOptionPane.showMessageDialog(null, "Could not save data to file: " + fileName);
 			}
+		}
+		
+		//------------------------------------------------------
+		// Beskrivning: Import Customers and the customer information to txt file
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------		
+		private void importCust() {
+			String fileName = JOptionPane.showInputDialog(null, "Import from file:","Customers.txt");		
+			try {
+				BufferedReader in = new BufferedReader(new BufferedReader(fileName));
+				in.
+				in.read
 				
+				
+				
+				in.close();
+			}
+			catch(IOException e) {
+				JOptionPane.showMessageDialog(null, "Could not read data from file: " + fileName);
+			}
+
 		}
 	}

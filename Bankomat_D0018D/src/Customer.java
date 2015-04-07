@@ -159,9 +159,14 @@ public class Customer {
 	//------------------------------------------------------	
 	public void save(PrintWriter out)
 	{
-		out.println(this.firstName);
-		out.println(this.lastName);
-		out.println(this.phoneNumber);
+		out.println("---CUSTOMER---");
+		out.println(this.name);
+		out.println(this.personnummer);
+		StringBuilder accInfo = new StringBuilder();
+		for(BankAccount i: account) { // loop over accounts
+			 accInfo.append(i.getTransactions());
+		}
+		out.println(accInfo);
 	}
 	
 	//------------------------------------------------------
@@ -169,7 +174,7 @@ public class Customer {
 	// Inparametrar: in - input stream
 	// Returvärde: None
 	//------------------------------------------------------	
-	public void read(BufferedReader in) 
+	/*public void read(BufferedReader in) 
 	{
 		try
 		{
@@ -181,7 +186,7 @@ public class Customer {
 		{
 			System.out.println("Det gick inte läsa från filen");
 		}
-	}
+	}*/
 
 	// Private Methods
 
