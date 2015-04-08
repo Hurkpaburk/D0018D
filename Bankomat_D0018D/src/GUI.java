@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,6 +19,7 @@ public class GUI extends JFrame implements ActionListener {
 		private JButton buttonCustInfo, buttonAccInfo, buttonWithdraw, buttonDeposit;
 		private JTextArea infoCust, infoAcc;
 		private JPanel leftPanel, rightPanel, rightButtonPanel;
+		private File fileName; 
 		
 		// Public Methods
 		
@@ -187,6 +189,9 @@ public class GUI extends JFrame implements ActionListener {
 			}
 			else if(text.equals("Export Customers")) {
 				exportCust();
+			}
+			else if(text.equals("Import Customers")) {
+				importCust();
 			}
 		}
 
@@ -388,8 +393,19 @@ public class GUI extends JFrame implements ActionListener {
 		// Returvärde: None
 		//------------------------------------------------------		
 		private void exportCust() {
-			String fileName = JOptionPane.showInputDialog(null, "Save to file:","Customers.txt");		
+			JFileChooser chooser = new JFileChooser();
+			int val = chooser.showSaveDialog(null);
+			if(val == JFileChooser.APPROVE_OPTION) {
+				fileName = chooser.getSelectedFile(); 
+			}
+			
 			try {
+				if(fileName.exists() == false) {
+					fileName.createNewFile();
+				}
+
+				//String fileName = JOptionPane.showInputDialog(null, "Save to file:","Customers.txt");		
+
 				PrintWriter out = new PrintWriter(new FileWriter(fileName));
 
 				for(int i = 0; i < bank.getCustomers().size(); i++) {
@@ -408,14 +424,17 @@ public class GUI extends JFrame implements ActionListener {
 		// Returvärde: None
 		//------------------------------------------------------		
 		private void importCust() {
-			String fileName = JOptionPane.showInputDialog(null, "Import from file:","Customers.txt");		
+			JFileChooser chooser = new JFileChooser();
+			int val = chooser.showOpenDialog(null);
+			if(val == JFileChooser.APPROVE_OPTION) {
+				fileName = chooser.getSelectedFile(); 
+			}
 			try {
-				BufferedReader in = new BufferedReader(new BufferedReader(fileName));
-				in.
-				in.read
-				
-				
-				
+				BufferedReader in = new BufferedReader(new FileReader(fileName));
+				String line;
+			    while ((line = in.readLine()) != null) {
+			        System.out.println(line);
+			    }
 				in.close();
 			}
 			catch(IOException e) {
