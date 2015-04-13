@@ -21,6 +21,9 @@ public class GUI extends JFrame implements ActionListener {
 		private JPanel leftPanel, rightPanel, rightButtonPanel;
 		private File fileName;
 		public final static String custDiv = "---CUSTOMER---";
+		public final static String custEndDiv = "---END CUSTOMER---";
+		public final static String AccDiv = "---ACCOUNT---";
+		public final static String AccEndDiv = "---END ACCOUNT---";
 		
 		// Public Methods
 		
@@ -425,26 +428,66 @@ public class GUI extends JFrame implements ActionListener {
 		// Returvärde: None
 		//------------------------------------------------------		
 		private void importCust() {
-			/*JFileChooser chooser = new JFileChooser();
+			JFileChooser chooser = new JFileChooser();
 			int val = chooser.showOpenDialog(null);
+			boolean newCust = false;
+			boolean newAcc = false;
+			
 			if(val == JFileChooser.APPROVE_OPTION) {
 				fileName = chooser.getSelectedFile(); 
 			}
+			
 			try {
 				BufferedReader in = new BufferedReader(new FileReader(fileName));
-				String line;
-				in.
+				
+		        if(in.readLine().equals(custDiv)) { // New Customer to import
+		        	newCust = true; 
+		        	
+		        }
+		        else if(in.readLine().equals(custEndDiv)) { // End of Customer to import
+		        	newCust = false; 
+		        }
+		        else if(in.readLine().equals(AccDiv)) { // End of Customer to import
+		        	newAcc = true; 
+		        }
+		        else if(in.readLine().equals(AccEndDiv)) { // End of Customer to import
+		        	newAcc = false; 
+		        }
+		        else {
+		        	if(newCust == true) {
+		        		bank.addCustomer(in.readLine(), Long.parseLong(in.readLine()));
+		        		if(newAcc == true) {
+		        			bank.a
+		        		}
+		        	}
+		        	
+		        }
+				
+				/*String line;
+				
 			    while ((line = in.readLine()) != null) {
-			        if(line == custDiv) { // New Customer to import
-			        	
+			        if(line.equals(custDiv)) { // New Customer to import
+			        	newCust = true; 
+			        	continue;
+			        }
+			        else if(line.equals(custEndDiv)) { // End of Customer to import
+			        	newCust = false; 
+			        	continue;
+			        }
+			        else {
+			        	if(newCust == true) {
+			        		custName = line;
+			        		continue;
+			        		
+			        	}
 			        	
 			        }
-			        	System.out.println(line);
-			    }
-				in.close();
-			}
+			    }*/
+				   
+			    in.close();
+			}	
 			catch(IOException e) {
 				JOptionPane.showMessageDialog(null, "Could not read data from file: " + fileName);
-			} */
+			} 
 		}
 	}

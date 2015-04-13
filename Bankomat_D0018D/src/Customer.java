@@ -164,9 +164,12 @@ public class Customer {
 		out.println(this.personnummer);
 		StringBuilder accInfo = new StringBuilder();
 		for(BankAccount i: account) { // loop over accounts
-			 accInfo.append(i.getTransactions());
+			accInfo.append("---ACCOUNT---\n");
+			accInfo.append(i.getTransactions());
+			accInfo.append("---END ACCOUNT---\n");
 		}
 		out.println(accInfo);
+		out.println(GUI.custEndDiv);
 	}
 	
 	//------------------------------------------------------
@@ -174,19 +177,18 @@ public class Customer {
 	// Inparametrar: in - input stream
 	// Returvärde: None
 	//------------------------------------------------------	
-	/*public void read(BufferedReader in) 
+	public void read(BufferedReader in) 
 	{
 		try
 		{
-			this.firstName = in.readLine();
-			this.lastName = in.readLine();
-			this.phoneNumber = in.readLine();
+			this.name = in.readLine();
+			this.personnummer = Long.parseLong(in.readLine());
 		}
 		catch(IOException e)
 		{
 			System.out.println("Det gick inte läsa från filen");
 		}
-	}*/
+	}
 
 	// Private Methods
 

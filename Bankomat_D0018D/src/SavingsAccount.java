@@ -51,7 +51,6 @@ public class SavingsAccount extends BankAccount {
 		if (numWithdraws >= 1) { // Number of withdraws is larger then one
 			if (balance-theTransaction*charge >= 0) { // Balance after transaction has to be larger then zero
 				balance = Math.round((balance - theTransaction*charge)*100)/100d; // Update 1, Lab2
-				
 				numWithdraws++;
 				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance); 
 				temp = true;
@@ -62,7 +61,6 @@ public class SavingsAccount extends BankAccount {
 				balance = Math.round((balance - theTransaction)*100)/100d; // Update 1, Lab2
 				numWithdraws++;
 				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
-				System.out.println(balance);
 				temp = true;
 			}
 		}
