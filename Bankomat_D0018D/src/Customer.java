@@ -159,7 +159,7 @@ public class Customer {
 	//------------------------------------------------------	
 	public void save(PrintWriter out)
 	{
-		out.println("---CUSTOMER---");
+		out.println(GUI.custDiv);
 		out.println(this.name);
 		out.println(this.personnummer);
 		StringBuilder accInfo = new StringBuilder();

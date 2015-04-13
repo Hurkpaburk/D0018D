@@ -19,7 +19,8 @@ public class GUI extends JFrame implements ActionListener {
 		private JButton buttonCustInfo, buttonAccInfo, buttonWithdraw, buttonDeposit;
 		private JTextArea infoCust, infoAcc;
 		private JPanel leftPanel, rightPanel, rightButtonPanel;
-		private File fileName; 
+		private File fileName;
+		public final static String custDiv = "---CUSTOMER---";
 		
 		// Public Methods
 		
@@ -424,7 +425,7 @@ public class GUI extends JFrame implements ActionListener {
 		// Returvärde: None
 		//------------------------------------------------------		
 		private void importCust() {
-			JFileChooser chooser = new JFileChooser();
+			/*JFileChooser chooser = new JFileChooser();
 			int val = chooser.showOpenDialog(null);
 			if(val == JFileChooser.APPROVE_OPTION) {
 				fileName = chooser.getSelectedFile(); 
@@ -432,14 +433,18 @@ public class GUI extends JFrame implements ActionListener {
 			try {
 				BufferedReader in = new BufferedReader(new FileReader(fileName));
 				String line;
+				in.
 			    while ((line = in.readLine()) != null) {
-			        System.out.println(line);
+			        if(line == custDiv) { // New Customer to import
+			        	
+			        	
+			        }
+			        	System.out.println(line);
 			    }
 				in.close();
 			}
 			catch(IOException e) {
 				JOptionPane.showMessageDialog(null, "Could not read data from file: " + fileName);
-			}
-
+			} */
 		}
 	}
