@@ -1,5 +1,6 @@
 import javax.swing.*;
 
+import java.util.*;
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -431,40 +432,53 @@ public class GUI extends JFrame implements ActionListener {
 			JFileChooser chooser = new JFileChooser();
 			int val = chooser.showOpenDialog(null);
 			boolean newCust = false;
+			boolean newpNr = false;
 			boolean newAcc = false;
+			String custName, custpNr, Line;
+			ArrayList<String> lineList = new ArrayList<String>();
 			
 			if(val == JFileChooser.APPROVE_OPTION) {
 				fileName = chooser.getSelectedFile(); 
 			}
-			
+
 			try {
 				BufferedReader in = new BufferedReader(new FileReader(fileName));
-				
-		        if(in.readLine().equals(custDiv)) { // New Customer to import
-		        	newCust = true; 
-		        	
-		        }
-		        else if(in.readLine().equals(custEndDiv)) { // End of Customer to import
-		        	newCust = false; 
-		        }
-		        else if(in.readLine().equals(AccDiv)) { // End of Customer to import
-		        	newAcc = true; 
-		        }
-		        else if(in.readLine().equals(AccEndDiv)) { // End of Customer to import
-		        	newAcc = false; 
-		        }
-		        else {
-		        	if(newCust == true) {
-		        		bank.addCustomer(in.readLine(), Long.parseLong(in.readLine()));
-		        		if(newAcc == true) {
-		        			bank.a
-		        		}
-		        	}
-		        	
-		        }
-				
-				/*String line;
-				
+
+				while((Line = in.readLine()) != null) {
+					lineList.add(Line);
+				}
+				in.close();
+			}	
+			catch(IOException e) {
+				JOptionPane.showMessageDialog(null, "Could not read data from file: " + fileName);
+			} 
+
+			/*if(newCust == true && newpNr == false) {
+				custName = Line;
+				newpNr = true;
+				continue;
+			}
+			if(newCust == true && newpNr == true)  {
+				custpNr = Line;
+				bank.addCustomer(custName, Long.parseLong(custpNr));
+				continue;
+			} */
+
+			for (int i = 0; i < lineList.size(); i++) { // loop over list {
+				if(lineList.get(i).equals(custDiv)) { // New Customer to import
+					newCust = true; 
+					custName = lineList.get(i+1);
+					custpNr = lineList.get(i+2);
+					System.out.println("New Customer found: " + custName + ", " + custpNr);
+					bank.addCustomer(custName, Long.parseLong(custpNr));
+				}
+			}
+		}
+
+
+
+		/*String line;
+
 			    while ((line = in.readLine()) != null) {
 			        if(line.equals(custDiv)) { // New Customer to import
 			        	newCust = true; 
@@ -478,16 +492,9 @@ public class GUI extends JFrame implements ActionListener {
 			        	if(newCust == true) {
 			        		custName = line;
 			        		continue;
-			        		
+
 			        	}
-			        	
+
 			        }
 			    }*/
-				   
-			    in.close();
-			}	
-			catch(IOException e) {
-				JOptionPane.showMessageDialog(null, "Could not read data from file: " + fileName);
-			} 
-		}
-	}
+}

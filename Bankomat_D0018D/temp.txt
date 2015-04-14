@@ -1,0 +1,18 @@
+---CUSTOMER---
+fdgd ggfhgf
+234234
+---ACCOUNT---
+Kontonummer: 1001, Saldo: 321.0, Kontotyp: Sparkonto, Räntesats: 2.0
+13/04/15 11:38:08, Deposit: 324.0, Balance: 324.0
+13/04/15 11:38:11, Withdraw: 3.0, Balance: 321.0
+---END ACCOUNT---
+---ACCOUNT---
+Kontonummer: 1002, Saldo: -343.0, Kontotyp: CreditAccount, Räntesats: 0.5
+13/04/15 11:38:25, Withdraw: 343.0, Balance: -343.0
+---END ACCOUNT---
+---END CUSTOMER---
+
+---CUSTOMER---
+gdfg
+32534
+---END CUSTOMER---
