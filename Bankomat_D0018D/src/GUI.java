@@ -403,7 +403,7 @@ public class GUI extends JFrame implements ActionListener {
 			if(val == JFileChooser.APPROVE_OPTION) {
 				fileName = chooser.getSelectedFile(); 
 			}
-			
+
 			try {
 				if(fileName.exists() == false) {
 					fileName.createNewFile();
@@ -422,7 +422,7 @@ public class GUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Could not save data to file: " + fileName);
 			}
 		}
-		
+
 		//------------------------------------------------------
 		// Beskrivning: Import Customers and the customer information to txt file
 		// Inparametrar: None
@@ -436,7 +436,7 @@ public class GUI extends JFrame implements ActionListener {
 			boolean newAcc = false;
 			String custName, custpNr, Line;
 			ArrayList<String> lineList = new ArrayList<String>();
-			
+
 			if(val == JFileChooser.APPROVE_OPTION) {
 				fileName = chooser.getSelectedFile(); 
 			}
@@ -453,48 +453,15 @@ public class GUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Could not read data from file: " + fileName);
 			} 
 
-			/*if(newCust == true && newpNr == false) {
-				custName = Line;
-				newpNr = true;
-				continue;
-			}
-			if(newCust == true && newpNr == true)  {
-				custpNr = Line;
-				bank.addCustomer(custName, Long.parseLong(custpNr));
-				continue;
-			} */
-
-			for (int i = 0; i < lineList.size(); i++) { // loop over list {
+			for (int i = 0; i < lineList.size(); i++) { // loop over list
 				if(lineList.get(i).equals(custDiv)) { // New Customer to import
 					newCust = true; 
 					custName = lineList.get(i+1);
 					custpNr = lineList.get(i+2);
 					System.out.println("New Customer found: " + custName + ", " + custpNr);
 					bank.addCustomer(custName, Long.parseLong(custpNr));
+					customers.setListData(bank.getCustomersName().toArray());
 				}
 			}
 		}
-
-
-
-		/*String line;
-
-			    while ((line = in.readLine()) != null) {
-			        if(line.equals(custDiv)) { // New Customer to import
-			        	newCust = true; 
-			        	continue;
-			        }
-			        else if(line.equals(custEndDiv)) { // End of Customer to import
-			        	newCust = false; 
-			        	continue;
-			        }
-			        else {
-			        	if(newCust == true) {
-			        		custName = line;
-			        		continue;
-
-			        	}
-
-			        }
-			    }*/
 }
