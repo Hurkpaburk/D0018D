@@ -21,10 +21,10 @@ public class GUI extends JFrame implements ActionListener {
 		private JTextArea infoCust, infoAcc;
 		private JPanel leftPanel, rightPanel, rightButtonPanel;
 		private File fileName;
-		public final static String custDiv = "---CUSTOMER---";
-		public final static String custEndDiv = "---END CUSTOMER---";
-		public final static String AccDiv = "---ACCOUNT---";
-		public final static String AccEndDiv = "---END ACCOUNT---";
+		public final static String CUSTDIV = "---CUSTOMER---";
+		public final static String CUSTENDDIV = "---END CUSTOMER---";
+		public final static String ACCDIV = "---ACCOUNT---";
+		public final static String ACCENDDIV = "---END ACCOUNT---";
 		
 		// Public Methods
 		
@@ -221,6 +221,8 @@ public class GUI extends JFrame implements ActionListener {
 			{
 				bank.addCustomer(nameInput.getText(), Long.parseLong(pNrInput.getText()));
 				customers.setListData(bank.getCustomersName().toArray());
+				infoCust.setText(null);
+				infoAcc.setText(null);
 			}
 		}
 
@@ -235,6 +237,8 @@ public class GUI extends JFrame implements ActionListener {
 				String remCustomer = bank.removeCustomer((bank.getCustomers().get(position).getCustomerPn()));
 				customers.setListData(bank.getCustomersName().toArray());
 				JOptionPane.showMessageDialog(null, "Following Customer is removed from Bank:\n" + remCustomer);
+				infoCust.setText(null);
+				infoAcc.setText(null);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
@@ -285,6 +289,7 @@ public class GUI extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Something went wrong creating account");
 				}
 				accounts.setListData(bank.getCustomers().get(position).getAccounts().toArray());
+				infoAcc.setText(null);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
@@ -302,6 +307,7 @@ public class GUI extends JFrame implements ActionListener {
 			if(accPost >= 0 && cusPost >= 0) { // Customer and account selected in JList
 				int accNum = bank.getCustomers().get(cusPost).getAccounts().get(accPost).getAccountNumber();
 				String info = bank.infoTransactions(bank.getCustomers().get(cusPost).getCustomerPn(),accNum);
+				infoAcc.setText(null);
 				infoAcc.setText(info);
 			}
 			else {
@@ -436,6 +442,7 @@ public class GUI extends JFrame implements ActionListener {
 			boolean newAcc = false;
 			String custName, custpNr, Line;
 			ArrayList<String> lineList = new ArrayList<String>();
+			String[] accInfo;
 
 			if(val == JFileChooser.APPROVE_OPTION) {
 				fileName = chooser.getSelectedFile(); 
@@ -454,7 +461,7 @@ public class GUI extends JFrame implements ActionListener {
 			} 
 
 			for (int i = 0; i < lineList.size(); i++) { // loop over list
-				if(lineList.get(i).equals(custDiv)) { // New Customer to import
+				if(lineList.get(i).equals(CUSTDIV)) { // New Customer to import
 					newCust = true; 
 					custName = lineList.get(i+1);
 					custpNr = lineList.get(i+2);
@@ -462,6 +469,22 @@ public class GUI extends JFrame implements ActionListener {
 					bank.addCustomer(custName, Long.parseLong(custpNr));
 					customers.setListData(bank.getCustomersName().toArray());
 				}
+				else if(lineList.get(i).equals(CUSTENDDIV)) { // End Customer to import
+					newCust = false;
+				}
+
+				if(newCust == true) { // New Accounts to import
+					if(lineList.get(i).equals(ACCDIV)) {
+						newAcc = true;
+						System.out.println(lineList.get(i+1));
+						accInfo = lineList.get(i+1).split("[,:]\\s+");
+						System.out.println(accInfo[3]);
+					}
+					else if(lineList.get(i).equals(ACCENDDIV)) { // End Accounts to import
+						newAcc = false;
+					}
+				}
 			}
+
 		}
 }

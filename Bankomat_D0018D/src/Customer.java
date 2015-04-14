@@ -159,7 +159,7 @@ public class Customer {
 	//------------------------------------------------------	
 	public void save(PrintWriter out)
 	{
-		out.println(GUI.custDiv);
+		out.println(GUI.CUSTDIV);
 		out.println(this.name);
 		out.println(this.personnummer);
 		StringBuilder accInfo = new StringBuilder();
@@ -169,7 +169,7 @@ public class Customer {
 			accInfo.append("---END ACCOUNT---\n");
 		}
 		out.println(accInfo);
-		out.println(GUI.custEndDiv);
+		out.println(GUI.CUSTENDDIV);
 	}
 	
 	//------------------------------------------------------
