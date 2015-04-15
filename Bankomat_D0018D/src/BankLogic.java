@@ -140,11 +140,11 @@ public class BankLogic {
 	// Inparametrar: pNr - personnummer
 	// Returvärde: Account number if created, otherwise -1 
 	//------------------------------------------------------
-	public int addSavingsAccount(long pNr) {
+	public int addSavingsAccount(Long pNr, int balance) {
 		int accountAdded = -1;
 		Customer thePerson = existCustomerPn(pNr);
 		if(thePerson != null) { // If customer exists
-			accountAdded = thePerson.addAccount(nextAccount, "Sparkonto", 0); // create account with 0 deposit
+			accountAdded = thePerson.addAccount(nextAccount, GUI.SPARKONTO, balance); // create account with 0 deposit
 			nextAccount++; // Increase the number for next available bank account
 			accountList.add(thePerson.getAccount(nextAccount)); // Add account to Bank account List
 		}
@@ -156,11 +156,11 @@ public class BankLogic {
 	// Inparametrar: pNr - personnummer
 	// Returvärde: Account number if created, otherwise -1 
 	//------------------------------------------------------
-	public int addCreditAccount(long pNr) {
+	public int addCreditAccount(Long pNr, int balance) {
 		int accountAdded = -1;
 		Customer thePerson = existCustomerPn(pNr);
 		if(thePerson != null) { // If customer exists
-			accountAdded = thePerson.addAccount(nextAccount, "Kreditkonto", 0); // create account with 0 deposit
+			accountAdded = thePerson.addAccount(nextAccount, GUI.KREDITKONTO, balance); // create account with 0 deposit
 			nextAccount++; // Increase the number for next available bank account
 			accountList.add(thePerson.getAccount(nextAccount)); // Add account to Bank account List
 		}

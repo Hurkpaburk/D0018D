@@ -164,9 +164,9 @@ public class Customer {
 		out.println(this.personnummer);
 		StringBuilder accInfo = new StringBuilder();
 		for(BankAccount i: account) { // loop over accounts
-			accInfo.append("---ACCOUNT---\n");
+			accInfo.append(GUI.ACCDIV + "\n");
 			accInfo.append(i.getTransactions());
-			accInfo.append("---END ACCOUNT---\n");
+			accInfo.append(GUI.ACCENDDIV + "\n");
 		}
 		out.println(accInfo);
 		out.println(GUI.CUSTENDDIV);

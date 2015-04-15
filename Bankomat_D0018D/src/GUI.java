@@ -25,6 +25,8 @@ public class GUI extends JFrame implements ActionListener {
 		public final static String CUSTENDDIV = "---END CUSTOMER---";
 		public final static String ACCDIV = "---ACCOUNT---";
 		public final static String ACCENDDIV = "---END ACCOUNT---";
+		public final static String SPARKONTO = "sparkonto";
+		public final static String KREDITKONTO = "kreditkonto";
 		
 		// Public Methods
 		
@@ -280,10 +282,10 @@ public class GUI extends JFrame implements ActionListener {
 						"Account Creation",JOptionPane.PLAIN_MESSAGE,null,accountList,savAcc);
 
 				if(accType != null && accType == savAcc) { // Saving account 
-					bank.addSavingsAccount(bank.getCustomers().get(position).getCustomerPn());
+					bank.addSavingsAccount(bank.getCustomers().get(position).getCustomerPn(), 0);
 				}
 				else if(accType != null && accType == creAcc) { // Credit account
-					bank.addCreditAccount(bank.getCustomers().get(position).getCustomerPn());
+					bank.addCreditAccount(bank.getCustomers().get(position).getCustomerPn(), 0);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Something went wrong creating account");
@@ -440,7 +442,9 @@ public class GUI extends JFrame implements ActionListener {
 			boolean newCust = false;
 			boolean newpNr = false;
 			boolean newAcc = false;
-			String custName, custpNr, Line;
+			String custName = null;
+			String Line = null;
+			Long custpNr = null;
 			ArrayList<String> lineList = new ArrayList<String>();
 			String[] accInfo;
 
@@ -464,9 +468,9 @@ public class GUI extends JFrame implements ActionListener {
 				if(lineList.get(i).equals(CUSTDIV)) { // New Customer to import
 					newCust = true; 
 					custName = lineList.get(i+1);
-					custpNr = lineList.get(i+2);
-					System.out.println("New Customer found: " + custName + ", " + custpNr);
-					bank.addCustomer(custName, Long.parseLong(custpNr));
+					custpNr = Long.parseLong(lineList.get(i+2));
+					System.out.println("New Customer found: " + custName + ", " + custpNr); //TODO Remove
+					bank.addCustomer(custName, custpNr);
 					customers.setListData(bank.getCustomersName().toArray());
 				}
 				else if(lineList.get(i).equals(CUSTENDDIV)) { // End Customer to import
@@ -476,15 +480,35 @@ public class GUI extends JFrame implements ActionListener {
 				if(newCust == true) { // New Accounts to import
 					if(lineList.get(i).equals(ACCDIV)) {
 						newAcc = true;
-						System.out.println(lineList.get(i+1));
-						accInfo = lineList.get(i+1).split("[,:]\\s+");
-						System.out.println(accInfo[3]);
+						accInfo = lineList.get(i+1).split("[,:]\\s+"); // regexp to get text in array
+						importAcc(custpNr, accInfo);
+						
 					}
 					else if(lineList.get(i).equals(ACCENDDIV)) { // End Accounts to import
 						newAcc = false;
 					}
 				}
 			}
-
+		}
+		
+		//------------------------------------------------------
+		// Beskrivning: Import Account and the account information to txt file
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------		
+		private void importAcc(Long pNr, String[] accInfo) {
+			
+			for(int j = 0;j < accInfo.length; j++){  //TODO Remove
+				System.out.println(accInfo[j] +"\n");
+			}
+			if(accInfo[5].equals(SPARKONTO)) { // New Savings account
+				bank.addSavingsAccount(pNr, Integer.parseInt(accInfo[3]));
+			}
+			else if(accInfo[5].equals(KREDITKONTO)) { // New credit account
+				bank.addCreditAccount(pNr, Integer.parseInt(accInfo[3]));
+			}
+			else {
+				// Do not create account
+			}
 		}
 }
