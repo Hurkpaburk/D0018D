@@ -21,7 +21,7 @@ public abstract class BankAccount {
 
 	
 	// Constructor
-	public BankAccount(int theAccountNumber, int theTransaction) {
+	public BankAccount(int theAccountNumber, double theTransaction) {
 		  accountNumber = theAccountNumber;
 		  accountType = "Default";
 		  balance = balance + theTransaction;

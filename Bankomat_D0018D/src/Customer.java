@@ -52,7 +52,7 @@ public class Customer {
 	// Returvärde: theAccountNumber - Account Number, -1 if not created
 	//------------------------------------------------------
 	
-	public int addAccount(int theAccountNumber, String theAccountType, int theTransaction) {
+	public int addAccount(int theAccountNumber, String theAccountType, double theTransaction) {
 		BankAccount tempAccount = existAccountNumber(theAccountNumber);
 		if(tempAccount != null) { // Check if account exists
 			return -1;

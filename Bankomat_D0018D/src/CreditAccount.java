@@ -13,7 +13,7 @@ public class CreditAccount extends BankAccount {
 	private double debtInterest = 7;
 	
 	// Constructor
-	public CreditAccount(int theAccountNumber, int theTransaction) {
+	public CreditAccount(int theAccountNumber, double theTransaction) {
 		  super(theAccountNumber, theTransaction);
 		  accountType = "CreditAccount";
 		  interestRate = 0.5;

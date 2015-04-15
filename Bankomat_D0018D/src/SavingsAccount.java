@@ -12,7 +12,7 @@ public class SavingsAccount extends BankAccount {
 	private int numWithdraws;
 	
 	// Constructor
-	public SavingsAccount(int theAccountNumber, int theTransaction) {
+	public SavingsAccount(int theAccountNumber, double theTransaction) {
 		  super(theAccountNumber, theTransaction);
 		  accountType = "Sparkonto";
 		  numWithdraws = 0;

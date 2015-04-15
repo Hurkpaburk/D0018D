@@ -25,8 +25,8 @@ public class GUI extends JFrame implements ActionListener {
 		public final static String CUSTENDDIV = "---END CUSTOMER---";
 		public final static String ACCDIV = "---ACCOUNT---";
 		public final static String ACCENDDIV = "---END ACCOUNT---";
-		public final static String SPARKONTO = "sparkonto";
-		public final static String KREDITKONTO = "kreditkonto";
+		public final static String SPARKONTO = "Sparkonto";
+		public final static String KREDITKONTO = "Kreditkonto";
 		
 		// Public Methods
 		
@@ -282,10 +282,10 @@ public class GUI extends JFrame implements ActionListener {
 						"Account Creation",JOptionPane.PLAIN_MESSAGE,null,accountList,savAcc);
 
 				if(accType != null && accType == savAcc) { // Saving account 
-					bank.addSavingsAccount(bank.getCustomers().get(position).getCustomerPn(), 0);
+					bank.addSavingsAccount(bank.getCustomers().get(position).getCustomerPn(), 0, 0);
 				}
 				else if(accType != null && accType == creAcc) { // Credit account
-					bank.addCreditAccount(bank.getCustomers().get(position).getCustomerPn(), 0);
+					bank.addCreditAccount(bank.getCustomers().get(position).getCustomerPn(), 0, 0);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Something went wrong creating account");
@@ -497,18 +497,28 @@ public class GUI extends JFrame implements ActionListener {
 		// Returvärde: None
 		//------------------------------------------------------		
 		private void importAcc(Long pNr, String[] accInfo) {
-			
+
 			for(int j = 0;j < accInfo.length; j++){  //TODO Remove
 				System.out.println(accInfo[j] +"\n");
+
 			}
+
+			double balance = Float.parseFloat(accInfo[3]); 
+			int accNum = Integer.parseInt(accInfo[1]);
+
+			System.out.println("Account Toye: " + accInfo[5]); // TODO remove
+			System.out.println("Balance: " + balance);
+			System.out.println("Account Number: " + accNum);
+			
 			if(accInfo[5].equals(SPARKONTO)) { // New Savings account
-				bank.addSavingsAccount(pNr, Integer.parseInt(accInfo[3]));
+				bank.addSavingsAccount(pNr, accNum, balance);
 			}
 			else if(accInfo[5].equals(KREDITKONTO)) { // New credit account
-				bank.addCreditAccount(pNr, Integer.parseInt(accInfo[3]));
+				bank.addCreditAccount(pNr, accNum, balance);
 			}
 			else {
 				// Do not create account
 			}
+			System.out.println(bank.getCustomers().get(0).getAccountInfo(accNum));
 		}
 }
