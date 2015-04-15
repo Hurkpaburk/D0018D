@@ -145,9 +145,6 @@ public class BankLogic {
 		if (account == 0) {
 			account = nextAccount;
 		}
-		else if( account <= nextAccount) { // Account number is to low to be added to bank, probaly taken
-			return accountAdded; 
-		}
 		Customer thePerson = existCustomerPn(pNr);
 		if(thePerson != null) { // If customer exists
 			accountAdded = thePerson.addAccount(nextAccount, GUI.SPARKONTO, balance); // create account with 0 deposit
@@ -166,9 +163,6 @@ public class BankLogic {
 		int accountAdded = -1;
 		if (account == 0) {
 			account = nextAccount;
-		}
-		else if( account <= nextAccount) { // Account number is to low to be added to bank, probaly taken
-			return accountAdded; 
 		}
 		Customer thePerson = existCustomerPn(pNr);
 		if(thePerson != null) { // If customer exists

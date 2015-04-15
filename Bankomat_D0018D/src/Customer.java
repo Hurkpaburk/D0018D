@@ -57,11 +57,11 @@ public class Customer {
 		if(tempAccount != null) { // Check if account exists
 			return -1;
 		}
-		else if(theAccountType == "Sparkonto") { // Account does not exist, create new Sparkonto
+		else if(theAccountType.equals(GUI.SPARKONTO)) { // Account does not exist, create new Sparkonto
 			account.add(new SavingsAccount(theAccountNumber, theTransaction));
 			return theAccountNumber;
 		}
-		else if (theAccountType == "Kreditkonto") { // Account does not exist, create new Kreditkonto
+		else if (theAccountType.equals(GUI.KREDITKONTO)) { // Account does not exist, create new Kreditkonto
 			account.add(new CreditAccount(theAccountNumber, theTransaction));
 			return theAccountNumber;
 		}

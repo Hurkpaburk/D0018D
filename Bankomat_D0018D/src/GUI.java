@@ -440,13 +440,13 @@ public class GUI extends JFrame implements ActionListener {
 			JFileChooser chooser = new JFileChooser();
 			int val = chooser.showOpenDialog(null);
 			boolean newCust = false;
-			boolean newpNr = false;
 			boolean newAcc = false;
 			String custName = null;
 			String Line = null;
+			String accNum = null;
 			Long custpNr = null;
 			ArrayList<String> lineList = new ArrayList<String>();
-			String[] accInfo;
+			String[] accInfo, accTrans;
 
 			if(val == JFileChooser.APPROVE_OPTION) {
 				fileName = chooser.getSelectedFile(); 
@@ -469,7 +469,6 @@ public class GUI extends JFrame implements ActionListener {
 					newCust = true; 
 					custName = lineList.get(i+1);
 					custpNr = Long.parseLong(lineList.get(i+2));
-					System.out.println("New Customer found: " + custName + ", " + custpNr); //TODO Remove
 					bank.addCustomer(custName, custpNr);
 					customers.setListData(bank.getCustomersName().toArray());
 				}
@@ -478,13 +477,21 @@ public class GUI extends JFrame implements ActionListener {
 				}
 
 				if(newCust == true) { // New Accounts to import
-					if(lineList.get(i).equals(ACCDIV)) {
+					if(lineList.get(i).equals(ACCDIV) && !(lineList.get(i+1).equals(ACCENDDIV))) {
 						newAcc = true;
 						accInfo = lineList.get(i+1).split("[,:]\\s+"); // regexp to get text in array
-						importAcc(custpNr, accInfo);
-						
+						accNum = accInfo[1];
+						if(accInfo[0] != null) {
+							importAcc(custpNr,accNum, accInfo);
+						}
 					}
-					else if(lineList.get(i).equals(ACCENDDIV)) { // End Accounts to import
+					else if(newAcc == true && !(lineList.get(i).equals(ACCENDDIV))) { // End Accounts to import
+						accTrans = lineList.get(i+1).split("[,:]\\s+"); // regexp to get text in array
+						if(accTrans[0] != null) {
+							importAcc(custpNr, accNum, accTrans);
+						}
+					}
+					else{
 						newAcc = false;
 					}
 				}
@@ -496,29 +503,33 @@ public class GUI extends JFrame implements ActionListener {
 		// Inparametrar: None
 		// Returvärde: None
 		//------------------------------------------------------		
-		private void importAcc(Long pNr, String[] accInfo) {
+		private void importAcc(Long pNr, String acc, String[] accInfo) {
 
 			for(int j = 0;j < accInfo.length; j++){  //TODO Remove
 				System.out.println(accInfo[j] +"\n");
-
 			}
-
-			double balance = Float.parseFloat(accInfo[3]); 
-			int accNum = Integer.parseInt(accInfo[1]);
-
-			System.out.println("Account Toye: " + accInfo[5]); // TODO remove
-			System.out.println("Balance: " + balance);
-			System.out.println("Account Number: " + accNum);
 			
-			if(accInfo[5].equals(SPARKONTO)) { // New Savings account
-				bank.addSavingsAccount(pNr, accNum, balance);
+			int accNum = Integer.parseInt(acc);
+			double balance;
+			
+			if(accInfo[0].equals("Kontonummer")) { // Import account
+				
+				balance = Float.parseFloat(accInfo[3]); 
+				
+				
+				if(accInfo[5].equals(SPARKONTO)) { // New Savings account
+					bank.addSavingsAccount(pNr, accNum, balance);
+				}
+				else if(accInfo[5].equals(KREDITKONTO)) { // New credit account
+					bank.addCreditAccount(pNr, accNum, balance);
+				}
+				else {
+					// Do not create account
+				}
+				System.out.println(bank.getCustomers().get(0).getAccountInfo(accNum)); // TODO remove
 			}
-			else if(accInfo[5].equals(KREDITKONTO)) { // New credit account
-				bank.addCreditAccount(pNr, accNum, balance);
+			else { // import transaction
+				
 			}
-			else {
-				// Do not create account
-			}
-			System.out.println(bank.getCustomers().get(0).getAccountInfo(accNum));
 		}
 }
