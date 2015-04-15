@@ -94,6 +94,17 @@ public abstract class BankAccount {
 		info.append("\n");
 		return info.toString();
 	}
+	
+	//------------------------------------------------------
+	// Beskrivning: set transaction history
+	// Inparametrar: None
+	// Returvärde: info - transaction history
+	//------------------------------------------------------
+	public boolean setTransactions(String trans) {
+
+		boolean ret = this.transactions.add(trans);
+		return ret;
+	}
 		
 	//------------------------------------------------------
 	// Beskrivning: get the account information

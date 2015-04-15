@@ -529,7 +529,7 @@ public class GUI extends JFrame implements ActionListener {
 				System.out.println(bank.getCustomers().get(0).getAccountInfo(accNum)); // TODO remove
 			}
 			else { // import transaction
-				
+				bank.getCustomers().get(0).getAccountInfo(accNum)
 			}
 		}
 }
