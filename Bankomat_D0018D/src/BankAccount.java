@@ -96,14 +96,19 @@ public abstract class BankAccount {
 	}
 	
 	//------------------------------------------------------
-	// Beskrivning: set transaction history
-	// Inparametrar: None
-	// Returvärde: info - transaction history
+	// Beskrivning: set new transaction time stamp on last transaction
+	// Inparametrar: time - New time stamp
+	// Returvärde: None
 	//------------------------------------------------------
-	public boolean setTransactions(String trans) {
+	public void setTransactionTime(String time) {
 
-		boolean ret = this.transactions.add(trans);
-		return ret;
+		String trans = transactions.get(transactions.size()-1);
+		System.out.println("Old trans: " + trans);
+		String[] accInfo = trans.split(",\\s+"); // regexp to get text in array
+		System.out.println(accInfo[0] + "----" + time);
+		trans = trans.replace(accInfo[0], time);
+		System.out.println("New trans: " + trans);
+		transactions.set(transactions.size()-1, trans);
 	}
 		
 	//------------------------------------------------------

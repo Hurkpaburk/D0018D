@@ -17,7 +17,7 @@ public class GUI extends JFrame implements ActionListener {
 		// Instance Variables
 		private BankLogic bank;
 		private JList customers, accounts;
-		private JButton buttonCustInfo, buttonAccInfo, buttonWithdraw, buttonDeposit;
+		private JButton buttonCustInfo, buttonAccInfo, buttonWithdraw, buttonDeposit, buttonAccExp;
 		private JTextArea infoCust, infoAcc;
 		private JPanel leftPanel, rightPanel, rightButtonPanel;
 		private File fileName;
@@ -67,7 +67,7 @@ public class GUI extends JFrame implements ActionListener {
 
 			leftPanel = new JPanel(new GridLayout(3,1));
 			rightPanel = new JPanel(new GridLayout(3,1));
-			rightButtonPanel = new JPanel(new GridLayout(1,3));
+			rightButtonPanel = new JPanel(new GridLayout(1,4));
 			
 			buttonCustInfo = new JButton("Show Customer");
 			buttonCustInfo.addActionListener(this);
@@ -77,7 +77,9 @@ public class GUI extends JFrame implements ActionListener {
 			buttonWithdraw.addActionListener(this);
 			buttonDeposit = new JButton("Deposit");
 			buttonDeposit.addActionListener(this);
-			
+			buttonAccExp = new JButton("Export Account");
+		    buttonAccExp.addActionListener(this);
+		    
 			infoCust = new JTextArea();
 			infoCust.setBorder(BorderFactory.createTitledBorder("Customer Information"));
 			infoAcc = new JTextArea();
@@ -107,6 +109,7 @@ public class GUI extends JFrame implements ActionListener {
 			rightButtonPanel.add(buttonAccInfo,0);
 			rightButtonPanel.add(buttonDeposit,1);
 			rightButtonPanel.add(buttonWithdraw,2);
+			rightButtonPanel.add(buttonAccExp,3);
 			
 			rightPanel.add(accounts,0);
 			rightPanel.add(rightButtonPanel,1);
@@ -196,6 +199,9 @@ public class GUI extends JFrame implements ActionListener {
 			}
 			else if(text.equals("Deposit")) {
 				depositAccount();
+			}
+			else if(text.equals("Export Account")) {
+				exportAcc();
 			}
 			else if(text.equals("Export Customers")) {
 				exportCust();
@@ -402,6 +408,41 @@ public class GUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");
 			}
 		}
+		
+		//------------------------------------------------------
+		// Beskrivning: Export account to txt file
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
+		private void exportAcc() {
+			int accPost = accounts.getSelectedIndex();
+			int cusPost = customers.getSelectedIndex();
+			if(accPost >= 0 && cusPost >= 0) { // Customer and account selected in JList
+				JFileChooser chooser = new JFileChooser();
+				int val = chooser.showSaveDialog(null);
+				if(val == JFileChooser.APPROVE_OPTION) {
+					fileName = chooser.getSelectedFile(); 
+				}
+
+				try {
+					if(fileName.exists() == false) {
+						fileName.createNewFile();
+					}
+
+					PrintWriter out = new PrintWriter(new FileWriter(fileName));
+
+					bank.getCustomers().get(cusPost).saveAcc(out, accPost);
+					
+					out.close();
+				}
+				catch(IOException e) {
+					JOptionPane.showMessageDialog(null, "Could not save data to file: " + fileName);
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Select a Customer and Account in the lists");
+			}
+		}		
 
 		//------------------------------------------------------
 		// Beskrivning: Export Customers and the customer information to txt file
@@ -420,12 +461,10 @@ public class GUI extends JFrame implements ActionListener {
 					fileName.createNewFile();
 				}
 
-				//String fileName = JOptionPane.showInputDialog(null, "Save to file:","Customers.txt");		
-
 				PrintWriter out = new PrintWriter(new FileWriter(fileName));
 
 				for(int i = 0; i < bank.getCustomers().size(); i++) {
-					bank.getCustomers().get(i).save(out);
+					bank.getCustomers().get(i).saveCust(out);
 				}
 				out.close();
 			}
@@ -507,35 +546,36 @@ public class GUI extends JFrame implements ActionListener {
 		// Returvärde: None
 		//------------------------------------------------------		
 		private void importAcc(Long pNr, String acc, String[] accInfo) {
-
-			for(int j = 0;j < accInfo.length; j++){  //TODO Remove
-				System.out.println(accInfo[j] +"\n");
-			}
 			
 			int accNum = Integer.parseInt(acc);
-			double balance;
+			double amount;
+			String time = null;
 			
 			if(accInfo[0].equals(KONTONUMMER)) { // Import account
 				
-				balance = Float.parseFloat(accInfo[3]); 
+				amount = Float.parseFloat(accInfo[3]); 
 				
 				
 				if(accInfo[5].equals(SPARKONTO)) { // New Savings account
-					bank.addSavingsAccount(pNr, accNum, balance);
+					bank.addSavingsAccount(pNr, accNum, amount);
 				}
 				else if(accInfo[5].equals(KREDITKONTO)) { // New credit account
-					bank.addCreditAccount(pNr, accNum, balance);
+					bank.addCreditAccount(pNr, accNum, amount);
 				}
 				else {
 					// Do not create account
 				}
 			}
 			else { // import transactions
+				amount = Double.parseDouble(accInfo[2]);
+				time = accInfo[0];
 				if(accInfo[1].equals(DEPOSIT)) {
-					bank.deposit(pNr, accNum, Double.parseDouble(accInfo[2]));
+					bank.deposit(pNr, accNum, amount);
+					bank.setTransactionTime(pNr, accNum, time);
 				}
 				else if(accInfo[1].equals(WITHDRAW)) {
-					bank.withdraw(pNr, accNum, Double.parseDouble(accInfo[2]));
+					bank.withdraw(pNr, accNum, amount);
+					bank.setTransactionTime(pNr, accNum, time);
 				}
 				else {
 				// Do Nothing, no valid transaction

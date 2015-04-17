@@ -157,7 +157,7 @@ public class Customer {
 	// Inparametrar: out - text output stream
 	// Returvärde: None
 	//------------------------------------------------------	
-	public void save(PrintWriter out)
+	public void saveCust(PrintWriter out)
 	{
 		out.println(GUI.CUSTDIV);
 		out.println(this.name);
@@ -170,6 +170,18 @@ public class Customer {
 		}
 		out.println(accInfo);
 		out.println(GUI.CUSTENDDIV);
+	}
+	
+	//------------------------------------------------------
+	// Beskrivning: Export Account to textfile
+	// Inparametrar: out - text output stream, accNum - Account Number
+	// Returvärde: None
+	//------------------------------------------------------	
+	public void saveAcc(PrintWriter out, int accPos)
+	{
+		StringBuilder accInfo = new StringBuilder();
+		accInfo.append(account.get(accPos).getTransactions());
+		out.println(accInfo);
 	}
 	
 	//------------------------------------------------------

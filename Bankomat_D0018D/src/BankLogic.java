@@ -254,6 +254,18 @@ public class BankLogic {
 		}
 		return null;
 	}
+	
+	//------------------------------------------------------
+	// Beskrivning: Set new transaction time for specificed account
+	// Inparametrar: pNr - personnummer, accNum - Account Number, time - New time stamp
+	// Returvärde: Information about closed account
+	//------------------------------------------------------
+	public void setTransactionTime(Long pNr, int accNum, String time) {
+		Customer thePerson = existCustomerPn(pNr);
+		if(thePerson != null) { // exist customer
+			thePerson.getAccount(accNum).setTransactionTime(time);
+		}
+	}
 
 	//	Private Methods
 
