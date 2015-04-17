@@ -166,7 +166,7 @@ public class Customer {
 		for(BankAccount i: account) { // loop over accounts
 			accInfo.append(GUI.ACCDIV + "\n");
 			accInfo.append(i.getTransactions());
-			accInfo.append(GUI.ACCENDDIV + "\n");
+			accInfo.append(GUI.ACCENDDIV);
 		}
 		out.println(accInfo);
 		out.println(GUI.CUSTENDDIV);

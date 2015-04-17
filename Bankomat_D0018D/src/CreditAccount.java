@@ -15,14 +15,14 @@ public class CreditAccount extends BankAccount {
 	// Constructor
 	public CreditAccount(int theAccountNumber, double theTransaction) {
 		  super(theAccountNumber, theTransaction);
-		  accountType = "CreditAccount";
+		  accountType = GUI.KREDITKONTO;
 		  interestRate = 0.5;
 	}	
 	
 	// Default Constructor
 	public CreditAccount() {
 		 super();
-		 accountType = "CreditAccount";
+		 accountType = GUI.KREDITKONTO;
 		 interestRate = 0.5;
 	}
 	
@@ -54,7 +54,7 @@ public class CreditAccount extends BankAccount {
 	public boolean withdraw(double theTransaction) {
 		if (balance-theTransaction >= -creditLimit) { // Balance after transaction has to be larger then zero
 			balance = Math.round((balance - theTransaction)*100)/100d; // Update 1, Lab2
-			transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
+			transactions.add(getTime() + ", " + GUI.WITHDRAW + ": " + theTransaction + ", Balance: " + balance);
 			return true;
 		}
 		else {

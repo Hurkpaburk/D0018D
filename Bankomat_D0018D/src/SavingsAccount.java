@@ -14,7 +14,7 @@ public class SavingsAccount extends BankAccount {
 	// Constructor
 	public SavingsAccount(int theAccountNumber, double theTransaction) {
 		  super(theAccountNumber, theTransaction);
-		  accountType = "Sparkonto";
+		  accountType = GUI.SPARKONTO;
 		  numWithdraws = 0;
 		  interestRate = 2;
 	}	
@@ -22,7 +22,7 @@ public class SavingsAccount extends BankAccount {
 	// Default Constructor
 	public SavingsAccount() {
 		 super();
-		 accountType = "Sparkonto";
+		 accountType = GUI.SPARKONTO;
 		 numWithdraws = 0;
 		 interestRate = 2;
 	}
@@ -52,7 +52,7 @@ public class SavingsAccount extends BankAccount {
 			if (balance-theTransaction*charge >= 0) { // Balance after transaction has to be larger then zero
 				balance = Math.round((balance - theTransaction*charge)*100)/100d; // Update 1, Lab2
 				numWithdraws++;
-				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance); 
+				transactions.add(getTime() + ", " + GUI.WITHDRAW + ": " + theTransaction + ", Balance: " + balance); 
 				temp = true;
 			}
 		}
@@ -60,7 +60,7 @@ public class SavingsAccount extends BankAccount {
 			if (balance-theTransaction >= 0) { // Balance after transaction has to be larger then zero
 				balance = Math.round((balance - theTransaction)*100)/100d; // Update 1, Lab2
 				numWithdraws++;
-				transactions.add(getTime() + ", Withdraw: " + theTransaction + ", Balance: " + balance);
+				transactions.add(getTime() + ", " + GUI.WITHDRAW + ": " + theTransaction + ", Balance: " + balance);
 				temp = true;
 			}
 		}

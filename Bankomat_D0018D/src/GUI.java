@@ -26,7 +26,10 @@ public class GUI extends JFrame implements ActionListener {
 		public final static String ACCDIV = "---ACCOUNT---";
 		public final static String ACCENDDIV = "---END ACCOUNT---";
 		public final static String SPARKONTO = "Sparkonto";
-		public final static String KREDITKONTO = "Kreditkonto";
+		public final static String KREDITKONTO = "CreditAccount";
+		public final static String KONTONUMMER = "Kontonummer";
+		public final static String DEPOSIT = "Deposit";
+		public final static String WITHDRAW = "Withdraw";
 		
 		// Public Methods
 		
@@ -485,7 +488,7 @@ public class GUI extends JFrame implements ActionListener {
 							importAcc(custpNr,accNum, accInfo);
 						}
 					}
-					else if(newAcc == true && !(lineList.get(i).equals(ACCENDDIV))) { // End Accounts to import
+					else if(newAcc == true && !(lineList.get(i+1).equals(ACCENDDIV))) { // End Accounts to import
 						accTrans = lineList.get(i+1).split("[,:]\\s+"); // regexp to get text in array
 						if(accTrans[0] != null) {
 							importAcc(custpNr, accNum, accTrans);
@@ -512,7 +515,7 @@ public class GUI extends JFrame implements ActionListener {
 			int accNum = Integer.parseInt(acc);
 			double balance;
 			
-			if(accInfo[0].equals("Kontonummer")) { // Import account
+			if(accInfo[0].equals(KONTONUMMER)) { // Import account
 				
 				balance = Float.parseFloat(accInfo[3]); 
 				
@@ -526,10 +529,17 @@ public class GUI extends JFrame implements ActionListener {
 				else {
 					// Do not create account
 				}
-				System.out.println(bank.getCustomers().get(0).getAccountInfo(accNum)); // TODO remove
 			}
-			else { // import transaction
-				bank.getCustomers().get(0).getAccountInfo(accNum)
+			else { // import transactions
+				if(accInfo[1].equals(DEPOSIT)) {
+					bank.deposit(pNr, accNum, Double.parseDouble(accInfo[2]));
+				}
+				else if(accInfo[1].equals(WITHDRAW)) {
+					bank.withdraw(pNr, accNum, Double.parseDouble(accInfo[2]));
+				}
+				else {
+				// Do Nothing, no valid transaction
+				}
 			}
 		}
 }

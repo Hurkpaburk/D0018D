@@ -1,18 +1,27 @@
 ---CUSTOMER---
-fdgd ggfhgf
-234234
+Cust ett
+12345
 ---ACCOUNT---
-Kontonummer: 1001, Saldo: 321.0, Kontotyp: Sparkonto, Räntesats: 2.0
-13/04/15 11:38:08, Deposit: 324.0, Balance: 324.0
-13/04/15 11:38:11, Withdraw: 3.0, Balance: 321.0
+Kontonummer: 1001, Saldo: 3430665.77, Kontotyp: Sparkonto, Räntesats: 2.0
+17/04/15 08:10:23, Deposit: 3454354.0, Balance: 3454354.0
+17/04/15 08:10:26, Withdraw: 34.0, Balance: 3454320.0
+17/04/15 08:10:29, Deposit: 3.0, Balance: 3454323.0
+17/04/15 08:10:32, Withdraw: 23423.0, Balance: 3430665.77
 ---END ACCOUNT---
 ---ACCOUNT---
-Kontonummer: 1002, Saldo: -343.0, Kontotyp: Kreditkonto, Räntesats: 0.5
-13/04/15 11:38:25, Withdraw: 343.0, Balance: -343.0
+Kontonummer: 1002, Saldo: -23.0, Kontotyp: CreditAccount, Räntesats: 0.5
+17/04/15 08:10:47, Deposit: 24234.0, Balance: 24234.0
+17/04/15 08:11:14, Withdraw: 2343.0, Balance: 21891.0
+17/04/15 08:11:19, Withdraw: 234.0, Balance: 21657.0
+17/04/15 08:11:30, Withdraw: 21657.0, Balance: 0.0
+17/04/15 08:11:35, Withdraw: 23.0, Balance: -23.0
 ---END ACCOUNT---
 ---END CUSTOMER---
-
 ---CUSTOMER---
-gdfg
-32534
+Kund två
+565613
+---ACCOUNT---
+Kontonummer: 1003, Saldo: 123123.0, Kontotyp: Sparkonto, Räntesats: 2.0
+17/04/15 08:11:52, Deposit: 123123.0, Balance: 123123.0
+---END ACCOUNT---
 ---END CUSTOMER---

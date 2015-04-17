@@ -59,7 +59,7 @@ public abstract class BankAccount {
 	//------------------------------------------------------
 	public void deposit(double theTransaction) {
 		balance = Math.round((balance + theTransaction)*100)/100d; // Update 1, Lab2
-		transactions.add(getTime() + ", Deposit: " + theTransaction + ", Balance: " + balance);
+		transactions.add(getTime() + ", " + GUI.DEPOSIT + ": " + theTransaction + ", Balance: " + balance);
 	}
 	
 	//------------------------------------------------------
@@ -113,7 +113,7 @@ public abstract class BankAccount {
 	//------------------------------------------------------
 	public String toString() {
 		
-		String accountInfo = new String("Kontonummer: " + accountNumber + ", Saldo: " + balance + ", Kontotyp: " + accountType + ", Räntesats: " + interestRate);
+		String accountInfo = new String(GUI.KONTONUMMER + ": " + accountNumber + ", Saldo: " + balance + ", Kontotyp: " + accountType + ", Räntesats: " + interestRate);
 		return accountInfo;
 	}	
 
