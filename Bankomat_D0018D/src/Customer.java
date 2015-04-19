@@ -183,24 +183,6 @@ public class Customer {
 		accInfo.append(account.get(accPos).getTransactions());
 		out.println(accInfo);
 	}
-	
-	//------------------------------------------------------
-	// Beskrivning: Import Customer from textfile
-	// Inparametrar: in - input stream
-	// Returvärde: None
-	//------------------------------------------------------	
-	public void read(BufferedReader in) 
-	{
-		try
-		{
-			this.name = in.readLine();
-			this.personnummer = Long.parseLong(in.readLine());
-		}
-		catch(IOException e)
-		{
-			System.out.println("Det gick inte läsa från filen");
-		}
-	}
 
 	// Private Methods
 

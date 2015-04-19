@@ -17,7 +17,7 @@ public abstract class BankAccount {
 	protected String accountType;
 	protected double interestRate;
 	protected ArrayList<String> transactions;
-	protected DateFormat  date; 
+	protected DateFormat date; 
 
 	
 	// Constructor
