@@ -1,4 +1,6 @@
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Customer {
@@ -180,6 +182,9 @@ public class Customer {
 	public void saveAcc(PrintWriter out, int accPos)
 	{
 		StringBuilder accInfo = new StringBuilder();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/YY HH:mm:ss");   
+		Calendar calendar = Calendar.getInstance();
+		accInfo.append("Current Time: " + dateFormat.format(calendar.getTime()) + "\n");
 		accInfo.append(account.get(accPos).getTransactions());
 		out.println(accInfo);
 	}
