@@ -1,13 +1,9 @@
-*Fixed decimals!
-*Fixed so the list is not shared between customers!
-See comment: "Update 1, Lab2" in code!
+* Added possibility to change customer name! 
+	Changes done in GUI.java 
+See comment: "Update 1, Lab3" in code!
 
-Comments from Birgitta:
+NOTE: No update to report and user guide images to reflect the changes in GUI. 
 
-Insättning ska inte gå om det inte är rätt kund till kontot.
-Avrunda till 2 decimaler. så ser det lite snyggare ut.
-Kunderna delar kontolista vilket resulterar i att alla har tillgång till alla konton. Inte bra.
-
-I övrigt har du bra arvshantering och bra kommentering av koden.
-
-/Birgitta
+UML chart for inlämning 4 does not include new method for changing customer name but described below.
+Private method in GUI class:
+changeCustName(): void

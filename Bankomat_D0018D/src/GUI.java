@@ -18,8 +18,10 @@ public class GUI extends JFrame implements ActionListener {
 		private BankLogic bank;
 		private JList customers, accounts;
 		private JButton buttonCustInfo, buttonAccInfo, buttonWithdraw, buttonDeposit, buttonAccExp;
+		private JButton buttonNewName; // Update 1, Lab3 
 		private JTextArea infoCust, infoAcc;
 		private JPanel leftPanel, rightPanel, rightButtonPanel;
+		private JPanel leftButtonPanel; // Update 1, Lab3 
 		private File fileName;
 		public final static String CUSTDIV = "---CUSTOMER---";
 		public final static String CUSTENDDIV = "---END CUSTOMER---";
@@ -69,8 +71,15 @@ public class GUI extends JFrame implements ActionListener {
 			rightPanel = new JPanel(new GridLayout(3,1));
 			rightButtonPanel = new JPanel(new GridLayout(1,4));
 			
+			leftButtonPanel = new JPanel(new GridLayout(1,2));  // Update 1, Lab3 
+			
 			buttonCustInfo = new JButton("Show Customer");
 			buttonCustInfo.addActionListener(this);
+			
+			// Update 1, Lab3 
+			buttonNewName = new JButton("New Customer Name");
+			buttonNewName.addActionListener(this);
+			
 			buttonAccInfo = new JButton("Show Account History");
 		    buttonAccInfo.addActionListener(this);
 		    buttonWithdraw = new JButton("Withdraw");
@@ -101,8 +110,11 @@ public class GUI extends JFrame implements ActionListener {
 			setExtendedState(JFrame.MAXIMIZED_BOTH); 
 			setLayout(new GridLayout(1,2));
 			
+			leftButtonPanel.add(buttonCustInfo,0); // Update 1, Lab3
+			leftButtonPanel.add(buttonNewName,1); // Update 1, Lab3
+			
 			leftPanel.add(customers,0);
-			leftPanel.add(buttonCustInfo,1);
+			leftPanel.add(leftButtonPanel,1); // Update 1, Lab3 
 			leftPanel.add(infoCust, 2);
 			add(leftPanel);
 			
@@ -181,6 +193,9 @@ public class GUI extends JFrame implements ActionListener {
 			}
 			else if(text.equals("Show Customer")) {
 				showCustomer();
+			}
+			else if(text.equals("New Customer Name")) {  // Update 1, Lab3
+				changeCustName();
 			}
 			else if(text.equals("Remove Customer")) {
 				removeCustomer();
@@ -268,6 +283,30 @@ public class GUI extends JFrame implements ActionListener {
 				infoCust.setText(bank.getCustomers().get(position).toString());
 				accounts.setListData(bank.getCustomers().get(position).getAccounts().toArray());
 				infoAcc.setText(null);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
+			}
+		}
+		
+		// Update 1, Lab3
+		//------------------------------------------------------
+		// Beskrivning: Change customer name
+		// Inparametrar: None
+		// Returvärde: None
+		//------------------------------------------------------
+		private void changeCustName() {
+			int position = customers.getSelectedIndex();
+			if(position >= 0) { // Customer selected in JList
+				// Dialog to change name
+				String newName = JOptionPane.showInputDialog(null, "New name for customer","New Name");
+				boolean nameOk = bank.changeCustomerName(newName, bank.getCustomers().get(position).getCustomerPn());
+				if(nameOk == true) {
+					customers.setListData(bank.getCustomersName().toArray());
+					JOptionPane.showMessageDialog(null, "Customer name changed to:\n" + newName);
+					infoCust.setText(null);
+					infoAcc.setText(null);
+				}
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Select a Customer in the list");
